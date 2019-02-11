@@ -689,6 +689,37 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 		break;
 	}
 	#endif
+	case SC_COND_CREATE: {
+		DEBUG('e',(char *)"condition variable create\n");
+		uint32_t condAddr = g_machine->ReadIntRegister(4); //read r4 first param
+		if(condAddr) { //can be zero,wich show it's an error
+			int sizeParam = GetLengthParam(condAddr);
+			char name[sizeParam];
+			GetStringParam(condAddr,name,sizeParam);
+			Condition * cond = new Condition(name);
+			int32_t objId = g_object_ids->AddObject(cond);
+			g_machine->WriteIntRegister(2,objId);
+			g_syscall_error->SetMsg((char *)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char *)"Invalid cond ID\n",INVALID_CONDITION_ID);
+		}
+		break;
+	}
+	case SC_COND_DESTROY: {
+		uint32_t condAc = g_machine->ReadIntRegister(4);
+		Condition * cond = (Condition*) g_object_ids->SearchObject(condAc);
+		if(cond && cond->type == CONDITION_TYPE) {
+			g_object_ids->RemoveObject(condAc);
+			delete cond;
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char*)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid cond ID\n",INVALID_CONDITION_ID);
+		}
+		break;
+	}
 
 
        default:
