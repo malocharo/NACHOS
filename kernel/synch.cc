@@ -230,8 +230,19 @@ Condition::~Condition() {
 */	
 //----------------------------------------------------------------------
 void Condition::Wait() { 
+  #ifndef ETUDIANTS_TP
     printf("**** Warning: method Condition::Wait is not implemented yet\n");
     exit(-1);
+  #endif
+  #ifdef ETUDIANTS_TP
+    IntStatus oldStat =  g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
+    waitqueue->Append(g_current_thread);
+    g_current_thread->Sleep(); //No matter what we block the thead (??)
+    // https://people.eecs.berkeley.edu/~kubitron/cs162/hand-outs/synch.html 
+
+    g_machine->interrupt->SetStatus(oldStat);
+    #endif
+
 }
 
 //----------------------------------------------------------------------
@@ -241,8 +252,18 @@ void Condition::Wait() {
 */
 //----------------------------------------------------------------------
 void Condition::Signal() { 
+  #ifndef ETUDIANTS_TP
     printf("**** Warning: method Condition::Signal is not implemented yet\n");
     exit(-1);
+  #endif
+  #ifdef ETUDIANTS_TP
+    IntStatus oldStat = g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
+    if(!waitqueue->IsEmpty()) {
+      g_scheduler->ReadyToRun((Thread *)waitqueue->getFirst()->item);
+      waitqueue->RemoveItem(waitqueue->getFirst()->item);
+    }
+    g_machine->interrupt->SetStatus(oldStat);
+  #endif
 }
 
 //----------------------------------------------------------------------
@@ -252,6 +273,17 @@ void Condition::Signal() {
 */
 //----------------------------------------------------------------------
 void Condition::Broadcast() { 
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: method Condition::Broadcast is not implemented yet\n");
   exit(-1);
+  #endif
+
+  #ifdef ETUDIANTS_TP
+  IntStatus oldStat = g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
+    while (!waitqueue->IsEmpty()) {
+      g_scheduler->ReadyToRun((Thread *)waitqueue->getFirst()->item);
+      waitqueue->RemoveItem(waitqueue->getFirst()->item);
+    }
+    g_machine->interrupt->SetStatus(oldStat);
+  #endif
 }
