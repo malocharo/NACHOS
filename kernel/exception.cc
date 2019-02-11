@@ -763,6 +763,68 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 		}
 		break;
 	}
+
+	case SC_SEM_CREATE : {
+			DEBUG('e',(char *)"condition variable create\n");
+		uint32_t semAddr = g_machine->ReadIntRegister(4); //read r4 first param
+		int semCount = g_machine->ReadIntRegister(5)// sec param, init value of the sem
+		if(semAddr) { //can be zero,wich show it's an error
+			int sizeParam = GetLengthParam(semAddr);
+			char name[sizeParam];
+			GetStringParam(semAddr,name,sizeParam);
+			Semaphore * sem = new Semaphore(name,semCount);
+			int32_t objId = g_object_ids->AddObject(sem);
+			g_machine->WriteIntRegister(2,objId); //ret value
+			g_syscall_error->SetMsg((char *)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char *)"Invalid sema ID\n",INVALID_SEMAPHORE_ID);
+		}
+		break;
+	}
+
+	case SC_P : { // SC_P and not SC_SEM_P ??????
+		uint32_t semId = g_machine->ReadIntRegister(4);
+		Semaphore * sem = (Semaphore*) g_object_ids->SearchObject(semId);
+		if(sem && sem->type == SEMAPHORE_TYPE) {
+			sem->P();
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char *)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid sema ID\n",INVALID_SEMAPHORE_ID);
+		}
+		break;
+	}
+
+	case SC_V : {
+			uint32_t semId = g_machine->ReadIntRegister(4);
+		Semaphore * sem = (Semaphore*) g_object_ids->SearchObject(semId);
+		if(sem && sem->type == SEMAPHORE_TYPE) {
+			sem->V();
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char *)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid sema ID\n",INVALID_SEMAPHORE_ID);
+		}
+		break;
+	}
+
+	case SC_SEM_DESTROY : {
+			uint32_t semaId = g_machine->ReadIntRegister(4);
+		Semaphore * sema = (Semaphore*) g_object_ids->SearchObject(semaId);
+		if(sema && sema->type == SEMAPHORE_TYPE) {
+			g_object_ids->RemoveObject(semaId);
+			delete sema;
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char*)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid sema ID\n",INVALID_SEMAPHORE_ID);
+		}
+		break;
+	}
 	#endif
 
 

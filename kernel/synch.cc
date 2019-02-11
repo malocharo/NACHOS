@@ -76,8 +76,22 @@ Semaphore::~Semaphore()
 //----------------------------------------------------------------------
 void
 Semaphore::P() {
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: method Semaphore::P is not implemented yet\n");
   exit(-1);
+  #endif
+
+  #ifdef ETUDIANTS_TP
+  IntStatus oldStat = g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
+
+  this->value--;
+  if(this->value < 0){
+    this->queue->Append(g_current_thread);
+    g_current_thread->Sleep()
+  }
+  g_machine->interrupt->SetStatus(oldStat);
+
+  #endif
 }
 
 //----------------------------------------------------------------------
@@ -90,8 +104,18 @@ Semaphore::P() {
 //----------------------------------------------------------------------
 void
 Semaphore::V() {
+  #ifndef ETUDIANTS_TP
    printf("**** Warning: method Semaphore::V is not implemented yet\n");
     exit(-1);
+  #endif
+
+  #ifdef ETUDIANTS_TP
+  IntStatus oldStat = g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
+  this->value++;
+  if(!this->queue->IsEmpty() && this->value>=0)
+    g_scheduler->ReadyToRun((Thread *) this->queue->Remove());
+  g_machine->interrupt->SetStatus(oldStat);
+  #endif
 }
 
 //----------------------------------------------------------------------
