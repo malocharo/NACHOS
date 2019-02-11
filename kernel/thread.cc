@@ -109,13 +109,13 @@ int Thread::Start(Process *owner,
   #endif
 
   #ifdef ETUDIANTS_TP
+  this->process = owner;
+  this->process->numThreads++;
   //M : Since the process got an addresse space, it make more sense to call it this way
   // but I wouldn't put mes couilles à couper
   this->stackPointer = this->process->addrspace->StackAllocate();
   int8_t* baseStackAddr = AllocBoundedArray(SIMULATORSTACKSIZE);
 
-  this->process = owner;
-  this->process->numThreads++;
 
   this->InitSimulatorContext(baseStackAddr,SIMULATORSTACKSIZE);
   //M : Since func is not a pointer but a value, I suppose it contains this addr of the func
