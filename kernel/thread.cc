@@ -352,8 +352,20 @@ Thread::Sleep ()
 void
 Thread::SaveProcessorState()
 {
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: method Thread::SaveProcessorState is not implemented yet\n");
   exit(-1);
+  #endif
+  #ifdef ETUDIANTS_TP
+  for(int i = 0;i< NUM_INT_REGS;i++)
+    this->thread_context->int_registers[i] = g_machine->ReadIntRegister(i);
+  
+  for(int i = 0;i< NUM_FP_REGS;i++)
+    this->thread_context->float_registers[i] = g_machine->ReadFPRegister(i);
+  
+  this->thread_context->cc  = g_machine->ReadCC();
+  #endif
+  
 }
 
 //----------------------------------------------------------------------
@@ -365,8 +377,19 @@ Thread::SaveProcessorState()
 void
 Thread::RestoreProcessorState()
 {
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: method Thread::RestoreProcessorState is not implemented yet\n");
   exit(-1);
+  #endif
+
+  #ifdef ETUDIANTS_TP
+  for(int i = 0; i<NUM_INT_REGS;i++)
+    g_machine->WriteIntRegister(i) = this->thread_context->int_registers[i];
+  for(int i = 0; i<NUM_FP_REGS;i++)
+    g_machine->WriteFPRegister(i) = this->thread_context->float_registers[i];
+  
+  g_machine->WriteCC(this->thread_context->cc);
+  #endif
 }
 
 //----------------------------------------------------------------------
