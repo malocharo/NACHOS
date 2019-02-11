@@ -277,18 +277,15 @@ Thread::Finish ()
 {
   #ifdef ETUDIANTS_TP
   IntStatus oldStat =  g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
-  
+  g_thread_to_be_destroyed = this;
+  this->Sleep();
   DEBUG('t', (char *)"Finishing thread \"%s\"\n", GetName());
-  // Go to sleep
-  Sleep();  // invokes SWITCH
-  #endif ETUDIANTS_TP
+  g_machine->interrupt->SetStatus(oldStat);
+  #endif 
  
   #ifndef ETUDIANTS_TP    
   printf("**** Warning: method Thread::Finish is not fully implemented yet\n");
   #endif
-
-  
-
  }
 
 //----------------------------------------------------------------------
