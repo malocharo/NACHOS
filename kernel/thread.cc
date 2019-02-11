@@ -102,9 +102,31 @@ Thread::~Thread()
 int Thread::Start(Process *owner,
 		  int32_t func, int arg)
 {
+  #ifndef ETUDIANTS_TP
   ASSERT(process == NULL);
   printf("**** Warning: method Thread::Start is not implemented yet\n");
   exit(-1);
+  #endif
+
+  #ifdef ETUDIANTS_TP
+  //M : Since the process got an addresse space, it make more sense to call it this way
+  // but I wouldn't put mes couilles à couper
+  this->stackPointer = this->process->addrspace->StackAllocate();
+  int8_t baseStackAddr = AllocBoundedArray(SIMULATORSTACKSIZE);
+
+  this->process = owner;
+  this->process->numThreads++;
+
+  this->InitSimulatorContext(baseStackAddr,SIMULATORSTACKSIZE);
+  //M : Since func is not a pointer but a value, I suppose it contains this addr of the func
+  //and this addr is where we want the PC register to be at the beginning of the thread
+  //same for the arg. 
+  this->InitThreadContext(func,this->stackPointer,arg);
+
+  g_alive->Append(this);
+  g_scheduler->ReadyToRun(this);
+  return NO_ERROR;
+  #endif
 }
 
 //----------------------------------------------------------------------
@@ -253,14 +275,19 @@ Thread::CheckOverflow()
 void
 Thread::Finish ()
 {
-
-    DEBUG('t', (char *)"Finishing thread \"%s\"\n", GetName());
- 
-    
-  printf("**** Warning: method Thread::Finish is not fully implemented yet\n");
-
+  #ifdef ETUDIANTS_TP
+  IntStatus oldStat =  g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
+  
+  DEBUG('t', (char *)"Finishing thread \"%s\"\n", GetName());
   // Go to sleep
   Sleep();  // invokes SWITCH
+  #endif ETUDIANTS_TP
+ 
+  #ifndef ETUDIANTS_TP    
+  printf("**** Warning: method Thread::Finish is not fully implemented yet\n");
+  #endif
+
+  
 
  }
 
