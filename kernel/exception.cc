@@ -720,6 +720,49 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 		}
 		break;
 	}
+
+	case SC_COND_WAIT : {
+		uint32_t condAc = g_machine->ReadIntRegister(4);
+		Condition * cond = (Condition*) g_object_ids->SearchObject(condAc);
+		if(cond && cond->type == CONDITION_TYPE) {
+			cond->Wait();
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char *)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid cond ID\n",INVALID_CONDITION_ID);
+		}
+		break;
+	}
+
+	case SC_COND_SIGNAL : {
+		uint32_t condAc = g_machine->ReadIntRegister(4);
+		Condition * cond = (Condition*) g_object_ids->SearchObject(condAc);
+		if(cond && cond->type == CONDITION_TYPE) {
+			cond->Signal();
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char *)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid cond ID\n",INVALID_CONDITION_ID);
+		}
+		break;
+
+	}
+
+	case SC_COND_BROADCAST : {
+		uint32_t condAc = g_machine->ReadIntRegister(4);
+		Condition * cond = (Condition*) g_object_ids->SearchObject(condAc);
+		if(cond && cond->type == CONDITION_TYPE) {
+			cond->Signal();
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char *)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid cond ID\n",INVALID_CONDITION_ID);
+		}
+		break;
+	}
 	#endif
 
 
