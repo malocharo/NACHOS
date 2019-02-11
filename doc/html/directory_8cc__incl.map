@@ -1,0 +1,17 @@
+<map id="filesys/directory.cc" name="filesys/directory.cc">
+<area shape="rect" id="node2" href="$system_8h.html" title="Global variables used in Nachos. " alt="" coords="208,299,323,324"/>
+<area shape="rect" id="node8" href="$utility_8h.html" title="Miscellaneous useful definitions, including debugging routines. " alt="" coords="448,519,544,544"/>
+<area shape="rect" id="node13" href="$msgerror_8h.html" title="Defines the data structure to store error messages during a syscall process. " alt="" coords="1004,79,1129,104"/>
+<area shape="rect" id="node14" href="$config_8h.html" title="Data structures for setting up the Nachos hardware and software configuration. " alt="" coords="549,79,651,104"/>
+<area shape="rect" id="node18" href="$filehdr_8h.html" title="Data structures for managing a disk file header. " alt="" coords="871,79,980,104"/>
+<area shape="rect" id="node21" href="$directory_8h.html" title="Data structures to manage a UNIX&#45;like directory of file names. " alt="" coords="725,152,848,177"/>
+<area shape="rect" id="node6" href="$list_8h.html" title="Data structures to manage LISP&#45;like lists. " alt="" coords="317,445,400,471"/>
+<area shape="rect" id="node12" href="$objid_8h.html" title="Object identifier data structure. " alt="" coords="218,372,313,397"/>
+<area shape="rect" id="node7" href="$copyright_8h.html" title="Nachos copyright notice Copyright (c) 1992&#45;1993 The Regents of the University of California. All rights reserved. " alt="" coords="726,665,853,691"/>
+<area shape="rect" id="node10" href="$sysdep_8h.html" title="System&#45;dependent interface. " alt="" coords="194,592,323,617"/>
+<area shape="rect" id="node15" href="$translationtable_8h.html" title="Data structures for managing address translation. " alt="" coords="576,445,752,471"/>
+<area shape="rect" id="node16" href="$filesys_8h.html" title="Data structures to represent the Nachos file system. " alt="" coords="590,152,700,177"/>
+<area shape="rect" id="node17" href="$openfile_8h.html" title="Data structures to manipulate files. " alt="" coords="683,225,803,251"/>
+<area shape="rect" id="node19" href="$disk_8h.html" title="Data structures to emulate a physical disk. " alt="" coords="978,445,1088,471"/>
+<area shape="rect" id="node20" href="$bitmap_8h.html" title="Data structures defining a bitmap. " alt="" coords="872,152,979,177"/>
+</map>

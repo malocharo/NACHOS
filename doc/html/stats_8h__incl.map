@@ -1,0 +1,12 @@
+<map id="utility/stats.h" name="utility/stats.h">
+<area shape="rect" id="node2" href="$utility_8h.html" title="Miscellaneous useful definitions, including debugging routines. " alt="" coords="211,519,307,544"/>
+<area shape="rect" id="node9" href="$list_8h.html" title="Data structures to manage LISP&#45;like lists. " alt="" coords="419,445,501,471"/>
+<area shape="rect" id="node10" href="$config_8h.html" title="Data structures for setting up the Nachos hardware and software configuration. " alt="" coords="441,79,543,104"/>
+<area shape="rect" id="node5" href="$copyright_8h.html" title="Nachos copyright notice Copyright (c) 1992&#45;1993 The Regents of the University of California. All rights reserved. " alt="" coords="499,665,626,691"/>
+<area shape="rect" id="node6" href="$sysdep_8h.html" title="System&#45;dependent interface. " alt="" coords="194,592,323,617"/>
+<area shape="rect" id="node11" href="$translationtable_8h.html" title="Data structures for managing address translation. " alt="" coords="576,445,752,471"/>
+<area shape="rect" id="node12" href="$filesys_8h.html" title="Data structures to represent the Nachos file system. " alt="" coords="465,152,575,177"/>
+<area shape="rect" id="node13" href="$openfile_8h.html" title="Data structures to manipulate files. " alt="" coords="333,225,453,251"/>
+<area shape="rect" id="node14" href="$system_8h.html" title="Global variables used in Nachos. " alt="" coords="279,299,393,324"/>
+<area shape="rect" id="node16" href="$objid_8h.html" title="Object identifier data structure. " alt="" coords="246,372,341,397"/>
+</map>

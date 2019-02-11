@@ -1,0 +1,11 @@
+<map id="Machine" name="Machine">
+<area shape="rect" id="node2" href="$class_m_m_u.html" title="Defines a MMU &#45; Memory Management Unit. " alt="" coords="178,601,281,728"/>
+<area shape="rect" id="node3" href="$class_translation_table.html" title="Defines the data structures used for address translation. " alt="" coords="160,260,312,467"/>
+<area shape="rect" id="node4" href="$class_page_table_entry.html" title="Defines an entry in a simple translation table. " alt="" coords="168,5,304,185"/>
+<area shape="rect" id="node5" href="$class_console.html" title="Defines a hardware console device. " alt="" coords="305,541,442,788"/>
+<area shape="rect" id="node6" href="$class_interrupt.html" title="Defines a low level interrupt hardware. " alt="" coords="18,541,147,788"/>
+<area shape="rect" id="node7" href="$class_list.html" title="Definition of a generic single&#45;linked &quot;list&quot;. " alt="" coords="5,247,136,480"/>
+<area shape="rect" id="node8" href="$class_a_c_i_a.html" title="Defines an ACIA (Asynchronous Communication Interface Adapter) device. An ACIA is an asynchronous dev..." alt="" coords="633,555,791,775"/>
+<area shape="rect" id="node9" href="$class_a_c_i_a__sysdep.html" title="This class is used to simulate an Asynchronous Communicating Interface Adapter on top of Unix sockets..." alt="" coords="683,929,813,1083"/>
+<area shape="rect" id="node10" href="$class_disk.html" title="Defines a physical disk I/O device. " alt="" coords="466,548,609,781"/>
+</map>

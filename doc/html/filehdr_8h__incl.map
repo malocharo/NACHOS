@@ -1,0 +1,11 @@
+<map id="filesys/filehdr.h" name="filesys/filehdr.h">
+<area shape="rect" id="node2" href="$copyright_8h.html" title="Nachos copyright notice Copyright (c) 1992&#45;1993 The Regents of the University of California. All rights reserved. " alt="" coords="526,592,653,617"/>
+<area shape="rect" id="node3" href="$disk_8h.html" title="Data structures to emulate a physical disk. " alt="" coords="702,372,812,397"/>
+<area shape="rect" id="node10" href="$bitmap_8h.html" title="Data structures defining a bitmap. " alt="" coords="452,79,559,104"/>
+<area shape="rect" id="node4" href="$utility_8h.html" title="Miscellaneous useful definitions, including debugging routines. " alt="" coords="339,445,435,471"/>
+<area shape="rect" id="node7" href="$sysdep_8h.html" title="System&#45;dependent interface. " alt="" coords="194,519,323,544"/>
+<area shape="rect" id="node11" href="$openfile_8h.html" title="Data structures to manipulate files. " alt="" coords="387,152,507,177"/>
+<area shape="rect" id="node12" href="$system_8h.html" title="Global variables used in Nachos. " alt="" coords="331,225,445,251"/>
+<area shape="rect" id="node14" href="$list_8h.html" title="Data structures to manage LISP&#45;like lists. " alt="" coords="495,372,577,397"/>
+<area shape="rect" id="node15" href="$objid_8h.html" title="Object identifier data structure. " alt="" coords="383,299,478,324"/>
+</map>

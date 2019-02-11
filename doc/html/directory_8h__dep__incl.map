@@ -1,0 +1,6 @@
+<map id="filesys/directory.h" name="filesys/directory.h">
+<area shape="rect" id="node2" href="$directory_8cc.html" title="Routines to manage a directory of file names. " alt="" coords="5,79,135,104"/>
+<area shape="rect" id="node3" href="$filesys_8cc.html" title="Routines to manage the overall operation of the file system. " alt="" coords="159,79,275,104"/>
+<area shape="rect" id="node4" href="$oftable_8cc.html" title="Routines for managing the open file table. " alt="" coords="298,79,418,104"/>
+<area shape="rect" id="node5" href="$config_8cc.html" title="Routines for setting up the Nachos hardware and software confuguration. " alt="" coords="441,79,549,104"/>
+</map>

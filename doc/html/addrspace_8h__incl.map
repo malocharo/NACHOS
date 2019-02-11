@@ -1,0 +1,9 @@
+<map id="kernel/addrspace.h" name="kernel/addrspace.h">
+<area shape="rect" id="node2" href="$copyright_8h.html" title="Nachos copyright notice Copyright (c) 1992&#45;1993 The Regents of the University of California. All rights reserved. " alt="" coords="111,519,238,544"/>
+<area shape="rect" id="node3" href="$list_8h.html" title="Data structures to manage LISP&#45;like lists. " alt="" coords="93,299,176,324"/>
+<area shape="rect" id="node10" href="$openfile_8h.html" title="Data structures to manipulate files. " alt="" coords="168,79,288,104"/>
+<area shape="rect" id="node4" href="$utility_8h.html" title="Miscellaneous useful definitions, including debugging routines. " alt="" coords="343,372,439,397"/>
+<area shape="rect" id="node7" href="$sysdep_8h.html" title="System&#45;dependent interface. " alt="" coords="454,445,583,471"/>
+<area shape="rect" id="node11" href="$system_8h.html" title="Global variables used in Nachos. " alt="" coords="232,152,347,177"/>
+<area shape="rect" id="node13" href="$objid_8h.html" title="Object identifier data structure. " alt="" coords="195,225,290,251"/>
+</map>

@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['p_5falign',['p_align',['../struct_elf32___phdr.html#afd09d9e4297b13fc94fd57d09f2a9f70',1,'Elf32_Phdr']]],
+  ['p_5ffilesz',['p_filesz',['../struct_elf32___phdr.html#ac9151f2e11001284bf1c7d2d2659555c',1,'Elf32_Phdr']]],
+  ['p_5fflags',['p_flags',['../struct_elf32___phdr.html#a35c457e6828894b7b275730593802050',1,'Elf32_Phdr']]],
+  ['p_5fmemsz',['p_memsz',['../struct_elf32___phdr.html#ada1cdd3d6ccb79a17bed0e3c21379c84',1,'Elf32_Phdr']]],
+  ['p_5foffset',['p_offset',['../struct_elf32___phdr.html#ac590d4c4b26104216e53058b5b03eef0',1,'Elf32_Phdr']]],
+  ['p_5fpaddr',['p_paddr',['../struct_elf32___phdr.html#af18f0a179a5fca09e3c04bcdce3fac2f',1,'Elf32_Phdr']]],
+  ['p_5ftype',['p_type',['../struct_elf32___phdr.html#a8b1d2942ddb9abcb85db1429b5116923',1,'Elf32_Phdr']]],
+  ['p_5fvaddr',['p_vaddr',['../struct_elf32___phdr.html#a01a298ebc899bcf9c23211a7bf1155a6',1,'Elf32_Phdr']]],
+  ['page_5fflags',['page_flags',['../class_swap_manager.html#a4b4801376db548182709f20b2ac8cb86',1,'SwapManager']]],
+  ['pagesize',['PageSize',['../class_config.html#a4d314dd963e31449255bbd301d1ce919',1,'Config']]],
+  ['pagetable',['pageTable',['../class_translation_table.html#a315b0890dd7fb2a9ab1602b40278438e',1,'TranslationTable']]],
+  ['pending',['pending',['../class_interrupt.html#a613e4276fbdf2c8f93e570b0cd3607eb',1,'Interrupt']]],
+  ['physicalpage',['physicalPage',['../class_page_table_entry.html#a92f44340f6a96ec43aa7df5d6e5b8b5f',1,'PageTableEntry']]],
+  ['print',['Print',['../class_config.html#a3f7d7c224877709cabae4fba23d83e87',1,'Config']]],
+  ['printfilesyst',['PrintFileSyst',['../class_config.html#a6f2f812602e0ed7cbabf576171887dda',1,'Config']]],
+  ['printstat',['PrintStat',['../class_config.html#a3073120c6795378a3fcfd05e7aa1d979',1,'Config']]],
+  ['process',['process',['../class_addr_space.html#a17f8d1be01fea3a2f714c4ee9cb65816',1,'AddrSpace::process()'],['../class_thread.html#a13b09b855703f94e0431cb650ce50161',1,'Thread::process()']]],
+  ['processorfrequency',['ProcessorFrequency',['../class_config.html#a0844210d4b9fddcbe0e61adaceff8791',1,'Config']]],
+  ['programtorun',['ProgramToRun',['../class_config.html#a8af03e90c5d67e68bed3e893bbdded9d',1,'Config']]],
+  ['put',['put',['../class_driver_console.html#a4fdc71c2cc213fb92b43f98b9f249ee9',1,'DriverConsole']]],
+  ['putbusy',['putBusy',['../class_console.html#a5a2296912ae98026f275b746ff6f0192',1,'Console']]]
+];

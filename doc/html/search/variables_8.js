@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['i_5fclock',['i_clock',['../class_physical_mem_manager.html#ad30c2da7ac12f1f1cdceaf1c36eebc16',1,'PhysicalMemManager']]],
+  ['idleticks',['idleTicks',['../class_statistics.html#a298784488a96ae87ae0c7c003d2090df',1,'Statistics']]],
+  ['ids',['ids',['../class_obj_id.html#a7c1c95d69e6e776f13eafb06cb1443c8',1,'ObjId']]],
+  ['incoming',['incoming',['../class_console.html#a3439910600490f41d70b02e1dd9acd91',1,'Console']]],
+  ['ind_5frec',['ind_rec',['../class_driver_a_c_i_a.html#a0139817b5bb4cb0a42c197ff3db71710',1,'DriverACIA']]],
+  ['ind_5fsend',['ind_send',['../class_driver_a_c_i_a.html#a2b965fba4e71e5308828799a53ce9f26',1,'DriverACIA']]],
+  ['inhandler',['inHandler',['../class_interrupt.html#a5ea5d05ea85a95979a51b6450433ca10',1,'Interrupt']]],
+  ['inputregister',['inputRegister',['../class_a_c_i_a.html#a913bc501c8f8a43271db04ad208eea33',1,'ACIA']]],
+  ['inputstateregister',['inputStateRegister',['../class_a_c_i_a.html#a102df52836b96e0e0d49c1704e7d5c25',1,'ACIA']]],
+  ['int_5fregisters',['int_registers',['../structthread_context_t.html#a0edcd2bd53323ba983b9f2855ec8552e',1,'threadContextT::int_registers()'],['../class_machine.html#ae0da89b16ec8e098144ddb09ab9bf02c',1,'Machine::int_registers()']]],
+  ['interface',['interface',['../class_a_c_i_a__sysdep.html#a23be6dcb06946de0d592a96576b1aa0b',1,'ACIA_sysdep']]],
+  ['interrupt',['interrupt',['../class_machine.html#a8290980871eb910ad13ace3a1b58108e',1,'Machine']]],
+  ['intstate',['intState',['../class_console.html#af7fcb22989428d31e02c3ec27831f9ce',1,'Console']]],
+  ['inuse',['inUse',['../class_directory_entry.html#a0686edcff271cdb66a2cb19696e7200a',1,'DirectoryEntry']]],
+  ['io',['io',['../class_page_table_entry.html#aea1e4ad19cbc2fd39d602a3473f4e935',1,'PageTableEntry']]],
+  ['isdir',['isdir',['../class_file_header.html#acc0eae005e756dff08b61ba8c34c9d4b',1,'FileHeader']]],
+  ['item',['item',['../class_list_element.html#a225471047f3248bbb2797c966753d10a',1,'ListElement']]]
+];

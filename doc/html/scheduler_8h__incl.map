@@ -1,0 +1,6 @@
+<map id="kernel/scheduler.h" name="kernel/scheduler.h">
+<area shape="rect" id="node2" href="$copyright_8h.html" title="Nachos copyright notice Copyright (c) 1992&#45;1993 The Regents of the University of California. All rights reserved. " alt="" coords="64,299,191,324"/>
+<area shape="rect" id="node3" href="$list_8h.html" title="Data structures to manage LISP&#45;like lists. " alt="" coords="69,79,152,104"/>
+<area shape="rect" id="node4" href="$utility_8h.html" title="Miscellaneous useful definitions, including debugging routines. " alt="" coords="186,152,282,177"/>
+<area shape="rect" id="node7" href="$sysdep_8h.html" title="System&#45;dependent interface. " alt="" coords="322,225,451,251"/>
+</map>

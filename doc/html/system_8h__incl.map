@@ -1,0 +1,7 @@
+<map id="kernel/system.h" name="kernel/system.h">
+<area shape="rect" id="node5" href="$list_8h.html" title="Data structures to manage LISP&#45;like lists. " alt="" coords="494,152,577,177"/>
+<area shape="rect" id="node11" href="$objid_8h.html" title="Object identifier data structure. " alt="" coords="348,79,443,104"/>
+<area shape="rect" id="node6" href="$copyright_8h.html" title="Nachos copyright notice Copyright (c) 1992&#45;1993 The Regents of the University of California. All rights reserved. " alt="" coords="396,372,523,397"/>
+<area shape="rect" id="node7" href="$utility_8h.html" title="Miscellaneous useful definitions, including debugging routines. " alt="" coords="318,225,414,251"/>
+<area shape="rect" id="node9" href="$sysdep_8h.html" title="System&#45;dependent interface. " alt="" coords="166,299,295,324"/>
+</map>

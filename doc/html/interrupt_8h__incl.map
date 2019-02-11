@@ -1,0 +1,6 @@
+<map id="machine/interrupt.h" name="machine/interrupt.h">
+<area shape="rect" id="node2" href="$copyright_8h.html" title="Nachos copyright notice Copyright (c) 1992&#45;1993 The Regents of the University of California. All rights reserved. " alt="" coords="67,299,194,324"/>
+<area shape="rect" id="node3" href="$list_8h.html" title="Data structures to manage LISP&#45;like lists. " alt="" coords="72,79,154,104"/>
+<area shape="rect" id="node4" href="$utility_8h.html" title="Miscellaneous useful definitions, including debugging routines. " alt="" coords="189,152,285,177"/>
+<area shape="rect" id="node7" href="$sysdep_8h.html" title="System&#45;dependent interface. " alt="" coords="325,225,453,251"/>
+</map>

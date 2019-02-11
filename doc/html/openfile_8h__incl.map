@@ -1,0 +1,8 @@
+<map id="filesys/openfile.h" name="filesys/openfile.h">
+<area shape="rect" id="node2" href="$copyright_8h.html" title="Nachos copyright notice Copyright (c) 1992&#45;1993 The Regents of the University of California. All rights reserved. " alt="" coords="399,445,526,471"/>
+<area shape="rect" id="node3" href="$utility_8h.html" title="Miscellaneous useful definitions, including debugging routines. " alt="" coords="263,299,359,324"/>
+<area shape="rect" id="node9" href="$system_8h.html" title="Global variables used in Nachos. " alt="" coords="251,79,365,104"/>
+<area shape="rect" id="node6" href="$sysdep_8h.html" title="System&#45;dependent interface. " alt="" coords="246,372,375,397"/>
+<area shape="rect" id="node11" href="$list_8h.html" title="Data structures to manage LISP&#45;like lists. " alt="" coords="271,225,353,251"/>
+<area shape="rect" id="node12" href="$objid_8h.html" title="Object identifier data structure. " alt="" coords="346,152,441,177"/>
+</map>

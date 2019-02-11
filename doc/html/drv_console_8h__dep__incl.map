@@ -1,0 +1,7 @@
+<map id="drivers/drvConsole.h" name="drivers/drvConsole.h">
+<area shape="rect" id="node2" href="$drv_console_8cc.html" title="Routines to synchronously access the console. " alt="" coords="5,79,155,104"/>
+<area shape="rect" id="node3" href="$exception_8cc.html" title="Entry point into the Nachos kernel . " alt="" coords="179,79,314,104"/>
+<area shape="rect" id="node4" href="$msgerror_8cc.html" title="Data structure to store the last syscall error message. " alt="" coords="339,79,470,104"/>
+<area shape="rect" id="node5" href="$system_8cc.html" title="Nachos initialization and cleanup routines. " alt="" coords="493,79,614,104"/>
+<area shape="rect" id="node6" href="$machine_8cc.html" title="Routines to simulate the execution of user programs. " alt="" coords="638,79,781,104"/>
+</map>

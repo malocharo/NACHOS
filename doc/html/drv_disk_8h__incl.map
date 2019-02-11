@@ -1,0 +1,22 @@
+<map id="drivers/drvDisk.h" name="drivers/drvDisk.h">
+<area shape="rect" id="node2" href="$copyright_8h.html" title="Nachos copyright notice Copyright (c) 1992&#45;1993 The Regents of the University of California. All rights reserved. " alt="" coords="667,959,794,984"/>
+<area shape="rect" id="node3" href="$disk_8h.html" title="Data structures to emulate a physical disk. " alt="" coords="580,372,690,397"/>
+<area shape="rect" id="node10" href="$synch_8h.html" title="Data structures for synchronizing threads. " alt="" coords="782,79,890,104"/>
+<area shape="rect" id="node4" href="$utility_8h.html" title="Miscellaneous useful definitions, including debugging routines. " alt="" coords="1193,812,1289,837"/>
+<area shape="rect" id="node7" href="$sysdep_8h.html" title="System&#45;dependent interface. " alt="" coords="1354,885,1483,911"/>
+<area shape="rect" id="node11" href="$system_8h.html" title="Global variables used in Nachos. " alt="" coords="1436,592,1551,617"/>
+<area shape="rect" id="node13" href="$list_8h.html" title="Data structures to manage LISP&#45;like lists. " alt="" coords="869,739,952,764"/>
+<area shape="rect" id="node15" href="$thread_8h.html" title="Data structures for managing threads. " alt="" coords="836,152,946,177"/>
+<area shape="rect" id="node14" href="$objid_8h.html" title="Object identifier data structure. " alt="" coords="1373,665,1467,691"/>
+<area shape="rect" id="node16" href="$machine_8h.html" title="Data structures to simulate the MIPS machine. " alt="" coords="465,225,602,251"/>
+<area shape="rect" id="node18" href="$stats_8h.html" title="Data structures for gathering statistics about Nachos performance. " alt="" coords="934,299,1029,324"/>
+<area shape="rect" id="node26" href="$process_8h.html" title="A process keeps track of the resources used by a running Nachos program. " alt="" coords="976,225,1096,251"/>
+<area shape="rect" id="node20" href="$translationtable_8h.html" title="Data structures for managing address translation. " alt="" coords="768,519,944,544"/>
+<area shape="rect" id="node23" href="$mmu_8h.html" title="Data structures for the MMU (Memory Management Unit) " alt="" coords="334,299,450,324"/>
+<area shape="rect" id="node24" href="$_a_c_i_a_8h.html" title="Data Structures to emulate an ACIA device. " alt="" coords="474,299,592,324"/>
+<area shape="rect" id="node25" href="$interrupt_8h.html" title="Data structures to emulate low&#45;level interrupt hardware. " alt="" coords="456,665,592,691"/>
+<area shape="rect" id="node19" href="$config_8h.html" title="Data structures for setting up the Nachos hardware and software configuration. " alt="" coords="973,372,1075,397"/>
+<area shape="rect" id="node21" href="$filesys_8h.html" title="Data structures to represent the Nachos file system. " alt="" coords="970,445,1080,471"/>
+<area shape="rect" id="node22" href="$openfile_8h.html" title="Data structures to manipulate files. " alt="" coords="1221,519,1341,544"/>
+<area shape="rect" id="node27" href="$addrspace_8h.html" title="Data structures to keep track of the memory resources of executing user programs (address spaces)..." alt="" coords="1155,445,1290,471"/>
+</map>

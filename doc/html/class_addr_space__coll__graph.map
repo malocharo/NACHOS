@@ -1,0 +1,9 @@
+<map id="AddrSpace" name="AddrSpace">
+<area shape="rect" id="node4" href="$class_process.html" title="Defines the data structures to keep track of the execution environment of a user program. " alt="" coords="192,1411,299,1524"/>
+<area shape="rect" id="node2" href="$class_translation_table.html" title="Defines the data structures used for address translation. " alt="" coords="395,715,547,921"/>
+<area shape="rect" id="node3" href="$class_page_table_entry.html" title="Defines an entry in a simple translation table. " alt="" coords="403,433,539,613"/>
+<area shape="rect" id="node5" href="$class_process_stat.html" title="Defines statistics that concern a particular process. " alt="" coords="5,983,187,1349"/>
+<area shape="rect" id="node6" href="$class_open_file.html" title="Defines the data structure maintained when a file is opened. " alt="" coords="205,393,334,653"/>
+<area shape="rect" id="node8" href="$structs__mapped__file.html" title="Information describing a memory&#45;mapped file. " alt="" coords="262,775,371,861"/>
+<area shape="rect" id="node7" href="$class_file_header.html" title="Defines a file header in the Nachos file system. " alt="" coords="194,5,345,332"/>
+</map>

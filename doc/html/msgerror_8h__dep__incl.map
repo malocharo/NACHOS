@@ -1,0 +1,14 @@
+<map id="kernel/msgerror.h" name="kernel/msgerror.h">
+<area shape="rect" id="node2" href="$directory_8cc.html" title="Routines to manage a directory of file names. " alt="" coords="5,79,135,104"/>
+<area shape="rect" id="node3" href="$filesys_8cc.html" title="Routines to manage the overall operation of the file system. " alt="" coords="159,79,275,104"/>
+<area shape="rect" id="node4" href="$fsmisc_8cc.html" title="Miscellaneous routines for the Nachos file system. " alt="" coords="298,79,415,104"/>
+<area shape="rect" id="node5" href="$oftable_8cc.html" title="Routines for managing the open file table. " alt="" coords="440,79,559,104"/>
+<area shape="rect" id="node6" href="$openfile_8cc.html" title="Routines to manage an open Nachos file. " alt="" coords="583,79,709,104"/>
+<area shape="rect" id="node7" href="$addrspace_8cc.html" title="Routines to manage address spaces (executing user programs). " alt="" coords="733,79,874,104"/>
+<area shape="rect" id="node8" href="$exception_8cc.html" title="Entry point into the Nachos kernel . " alt="" coords="898,79,1034,104"/>
+<area shape="rect" id="node9" href="$main_8cc.html" title="Bootstrap code to initialize the operating system kernel. " alt="" coords="1058,79,1165,104"/>
+<area shape="rect" id="node10" href="$msgerror_8cc.html" title="Data structure to store the last syscall error message. " alt="" coords="1188,79,1319,104"/>
+<area shape="rect" id="node11" href="$process_8cc.html" title="Routines to manage processes. " alt="" coords="1343,79,1469,104"/>
+<area shape="rect" id="node12" href="$system_8cc.html" title="Nachos initialization and cleanup routines. " alt="" coords="1492,79,1613,104"/>
+<area shape="rect" id="node13" href="$thread_8cc.html" title="Routines to manage threads. " alt="" coords="1637,79,1753,104"/>
+</map>

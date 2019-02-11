@@ -1,0 +1,15 @@
+<map id="OpenFileTableEntry" name="OpenFileTableEntry">
+<area shape="rect" id="node2" href="$class_lock.html" title="Defines the &quot;lock&quot; synchronization tool. " alt="" coords="225,1384,406,1551"/>
+<area shape="rect" id="node3" href="$class_thread.html" title="Data structures for managing threads. " alt="" coords="235,1089,396,1323"/>
+<area shape="rect" id="node4" href="$structsimulator_context_t.html" title="Defines the context of the Nachos simulator. " alt="" coords="146,875,275,975"/>
+<area shape="rect" id="node5" href="$class_process.html" title="Defines the data structures to keep track of the execution environment of a user program. " alt="" coords="396,868,504,981"/>
+<area shape="rect" id="node9" href="$class_addr_space.html" title="Defines the data structures to keep track of memory resources of executing user programs (address spa..." alt="" coords="486,1116,655,1296"/>
+<area shape="rect" id="node6" href="$class_process_stat.html" title="Defines statistics that concern a particular process. " alt="" coords="359,393,541,760"/>
+<area shape="rect" id="node7" href="$class_open_file.html" title="Defines the data structure maintained when a file is opened. " alt="" coords="570,447,698,707"/>
+<area shape="rect" id="node12" href="$structs__mapped__file.html" title="Information describing a memory&#45;mapped file. " alt="" coords="580,881,689,968"/>
+<area shape="rect" id="node8" href="$class_file_header.html" title="Defines a file header in the Nachos file system. " alt="" coords="559,5,710,332"/>
+<area shape="rect" id="node10" href="$class_translation_table.html" title="Defines the data structures used for address translation. " alt="" coords="780,821,931,1028"/>
+<area shape="rect" id="node11" href="$class_page_table_entry.html" title="Defines an entry in a simple translation table. " alt="" coords="788,487,924,667"/>
+<area shape="rect" id="node13" href="$structthread_context_t.html" title="Defines the thread context (MIPS virtual machine) " alt="" coords="5,875,122,975"/>
+<area shape="rect" id="node14" href="$class_list.html" title="Definition of a generic single&#45;linked &quot;list&quot;. " alt="" coords="80,1089,210,1323"/>
+</map>

@@ -1,0 +1,12 @@
+<map id="Thread" name="Thread">
+<area shape="rect" id="node2" href="$structsimulator_context_t.html" title="Defines the context of the Nachos simulator. " alt="" coords="5,875,135,975"/>
+<area shape="rect" id="node3" href="$class_process.html" title="Defines the data structures to keep track of the execution environment of a user program. " alt="" coords="380,868,488,981"/>
+<area shape="rect" id="node7" href="$class_addr_space.html" title="Defines the data structures to keep track of memory resources of executing user programs (address spa..." alt="" coords="487,1116,656,1296"/>
+<area shape="rect" id="node4" href="$class_process_stat.html" title="Defines statistics that concern a particular process. " alt="" coords="336,393,518,760"/>
+<area shape="rect" id="node5" href="$class_open_file.html" title="Defines the data structure maintained when a file is opened. " alt="" coords="542,447,670,707"/>
+<area shape="rect" id="node10" href="$structs__mapped__file.html" title="Information describing a memory&#45;mapped file. " alt="" coords="552,881,661,968"/>
+<area shape="rect" id="node6" href="$class_file_header.html" title="Defines a file header in the Nachos file system. " alt="" coords="531,5,681,332"/>
+<area shape="rect" id="node8" href="$class_translation_table.html" title="Defines the data structures used for address translation. " alt="" coords="686,821,838,1028"/>
+<area shape="rect" id="node9" href="$class_page_table_entry.html" title="Defines an entry in a simple translation table. " alt="" coords="694,487,830,667"/>
+<area shape="rect" id="node11" href="$structthread_context_t.html" title="Defines the thread context (MIPS virtual machine) " alt="" coords="158,875,275,975"/>
+</map>
