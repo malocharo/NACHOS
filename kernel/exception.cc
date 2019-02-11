@@ -767,7 +767,7 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 	case SC_SEM_CREATE : {
 			DEBUG('e',(char *)"condition variable create\n");
 		uint32_t semAddr = g_machine->ReadIntRegister(4); //read r4 first param
-		int semCount = g_machine->ReadIntRegister(5)// sec param, init value of the sem
+		int semCount = g_machine->ReadIntRegister(5);// sec param, init value of the sem
 		if(semAddr) { //can be zero,wich show it's an error
 			int sizeParam = GetLengthParam(semAddr);
 			char name[sizeParam];

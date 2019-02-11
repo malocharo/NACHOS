@@ -87,7 +87,7 @@ Semaphore::P() {
   this->value--;
   if(this->value < 0){
     this->queue->Append(g_current_thread);
-    g_current_thread->Sleep()
+    g_current_thread->Sleep();
   }
   g_machine->interrupt->SetStatus(oldStat);
 
