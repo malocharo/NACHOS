@@ -688,7 +688,7 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 		}
 		break;
 	}
-	#endif
+	
 	case SC_COND_CREATE: {
 		DEBUG('e',(char *)"condition variable create\n");
 		uint32_t condAddr = g_machine->ReadIntRegister(4); //read r4 first param
@@ -720,6 +720,7 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 		}
 		break;
 	}
+	#endif
 
 
        default:
