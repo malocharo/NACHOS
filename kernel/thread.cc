@@ -112,7 +112,7 @@ int Thread::Start(Process *owner,
   //M : Since the process got an addresse space, it make more sense to call it this way
   // but I wouldn't put mes couilles à couper
   this->stackPointer = this->process->addrspace->StackAllocate();
-  int8_t baseStackAddr = AllocBoundedArray(SIMULATORSTACKSIZE);
+  int8_t* baseStackAddr = AllocBoundedArray(SIMULATORSTACKSIZE);
 
   this->process = owner;
   this->process->numThreads++;
@@ -382,12 +382,12 @@ Thread::SaveProcessorState()
   #endif
   #ifdef ETUDIANTS_TP
   for(int i = 0;i< NUM_INT_REGS;i++)
-    this->thread_context->int_registers[i] = g_machine->ReadIntRegister(i);
+    this->thread_context.int_registers[i] = g_machine->ReadIntRegister(i);
   
   for(int i = 0;i< NUM_FP_REGS;i++)
-    this->thread_context->float_registers[i] = g_machine->ReadFPRegister(i);
+    this->thread_context.float_registers[i] = g_machine->ReadFPRegister(i);
   
-  this->thread_context->cc  = g_machine->ReadCC();
+  this->thread_context.cc  = g_machine->ReadCC();
   #endif
   
 }
@@ -408,11 +408,11 @@ Thread::RestoreProcessorState()
 
   #ifdef ETUDIANTS_TP
   for(int i = 0; i<NUM_INT_REGS;i++)
-    g_machine->WriteIntRegister(i) = this->thread_context->int_registers[i];
+    g_machine->WriteIntRegister(i,this->thread_context.int_registers[i]);
   for(int i = 0; i<NUM_FP_REGS;i++)
-    g_machine->WriteFPRegister(i) = this->thread_context->float_registers[i];
+    g_machine->WriteFPRegister(i,this->thread_context.float_registers[i]);
   
-  g_machine->WriteCC(this->thread_context->cc);
+  g_machine->WriteCC(this->thread_context.cc);
   #endif
 }
 
