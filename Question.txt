@@ -1,0 +1,58 @@
+Q1 syscall : 
+mode utilisateur : 
+appel à la fonction n_printf() dans userlib/libnachos.h 
+dans n_printf appel à la fonction interne de userlib/nachos.h n_vsnprintf()
+n_vsnprintf() s'occupe du formating ainsi que du remplissage du buffer qui sera outuput
+retour à n_printf()  
+
+mode noyau
+appel au syscall Write() défini dans Syscall.h, cet appel provoque une exception gérée par
+kernel/exception.cc
+puis le code asm du syscall dans sys.s
+
+Thread :
+Q1 :
+L'état du processeur, l'état de la machine 
+
+Q2 : Variable global dans kernel/system.cc "g_scheduler->readyList", 
+Non, le thread courant est dans la variable "g_current_thread", on le voit dans system.cc l 196
+
+Q3 : g_alive contient la liste de tous les threads du systeme quand readyList contient tous les threads prêt à être executer par le scheduler
+
+Q4 : Si "objets chainés" correspond à l'item contenu dans un noeud de la liste alors non car un item pourrait être présent dans plusieurs liste, il ne peut donc pas etre desalloué par les routines
+dans list.h. Les listes sont seulement un utilitaire dont l'utilisation doit être gérer par l'utilisateur.
+
+Si "objets chainés" correspond au noeud de la liste, alors une routine est prévu afin d'allouer et de desallouer ces noeuds au besoin.
+
+Q5 : g_current_thread durant la recherche d'un nouveau thread à exec puis le contextswitch est utilisé, le thread est alors placé dans la variable global g_alive 
+
+Q6 : on désactive les interruptions
+
+Q7 : Sauvegarde le contexte de l'ancien thread et charge le contexte du nouveau.
+threadContextT est un structure qui va contenir l'état des registres du systeme lors d'un changement de contexte
+simulatorContextT est un structure qui va contenir l'état de la "machine" lors du changement de contexte ( principalement
+l'état de la stack ) 
+
+La méthode SaveSimulatorState() sauvegarde l'état de la machine lors du changement de contexte d'un thread. La méthode
+RestoreSimulatorState() permet lors du "redémarrage" d'un thread de remettre la machine dans l'état de lequel le thread
+s'est fait arrêté.
+
+Les méthodes SaveProcessorState() et RestoreProcessorState() servent à sauvegarder et restaurer l'état du CPU lors du changement de contexte d'un thread.
+
+Q8 : le champ type est utilisé durant un appel système pour vérifier si l'object est bien celui qu'on devrait avoir
+
+DevEnv
+Q1 : les messages de DEBUG du système permettant de coomprendre ce qui ce passe durant l'execution de nachos, l'option "-s" permet l'execution d'un prog utilisateur pas a pas et l'affichage des registres.
+
+Q2 : Oui car nachos s'execute sur la machine hote, il est donc possible d'utiliser GDB
+commande pour afficher les variables globales.
+gdb ./nachos
+b main pour placer un breakpoint au début du programme
+r pour executer nachos qui s'arretera sur le breakpoint
+print [nom variable] affiche le contenu de la variable.
+
+Q3 : pas directement car le programme s'execute dans nachos, et nachos ne contiens pas de debugger mais, du fait que nachos s'execute sur la machine hote et qu'il simule l'ensemble du systeme, il est possible, en regardant l'état de nachos, de connaitre l'état du programme s'executant en son sein.
+
+
+
+
