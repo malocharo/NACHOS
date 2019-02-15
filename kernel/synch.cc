@@ -199,20 +199,11 @@ void Lock::Release() {
 #ifdef ETUDIANTS_TP
     IntStatus intStat = g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
 
-<<<<<<< HEAD
-    if(this->isHeldByCurrentThread()){
-      if(!sleepqueue->IsEmpty()) {
-        g_scheduler->ReadyToRun((Thread *)sleepqueue->Remove());
-      } else {
-      owner = NULL;
-      free = true;
-=======
     if (this->isHeldByCurrentThread()) {
       if (!sleepqueue->IsEmpty()) g_scheduler->ReadyToRun((Thread *)sleepqueue->Remove());
       else {
         owner = NULL;
         free = true;
->>>>>>> 1059bbe0adf18a5cc6e201ee159136ba4600e6be
       }
     }
 

@@ -86,50 +86,6 @@ main(int argc, char **argv)
     if (g_cfg->Remove) {	// remove Nachos file
         g_file_system->Remove(g_cfg->FileToRemove);
     }
-<<<<<<< HEAD
-    if (!strcmp(*argv, "-x")) {      	    // run a user program
-      ASSERT(argc > 1);
-      argCount = 2;
-      startfilename = argv[1];
-      exit(-1);
-    } else {exit(-1);}
-  }
-  
-  if (g_cfg->Remove) {	// remove Nachos file
-    g_file_system->Remove(g_cfg->FileToRemove);
-  }
-  if (g_cfg->MakeDir) { // Make Nachos directory
-    g_file_system->Mkdir(g_cfg->DirToMake);
-  }
-  if (g_cfg->RemoveDir) { // Remove Nachos file
-    g_file_system->Rmdir(g_cfg->DirToRemove);
-  }
-  if (g_cfg->NbCopy!=0) {// copy from UNIX to Nachos
-    
-    for(int i=0;i<g_cfg->NbCopy;i++) {
-      if ((strlen(g_cfg->ToCopyUnix[i])!=0)
-	  && (strlen(g_cfg->ToCopyNachos[i])!=0))
-	Copy(g_cfg->ToCopyUnix[i],g_cfg->ToCopyNachos[i]);
-    }
-  }
-  if (g_cfg->Print) {	// print a Nachos file
-    Print(g_cfg->FileToPrint);
-  }
-  if (g_cfg->ListDir) {	// list Nachos directory
-    g_file_system->List();
-  }
-  if (g_cfg->PrintFileSyst) {	// print entire filesystem
-    g_file_system->Print();
-  }
-  if (! strcmp(startfilename,"")) {
-    printf("Warning: No program to start\n");
-  }
-  else {
-    Process * p = new Process(startfilename, & err);
-    if (err != NO_ERROR) {
-      fprintf(stderr, g_syscall_error->GetFormat(err), startfilename);
-      exit(-1);
-=======
     if (g_cfg->MakeDir) { // Make Nachos directory
         g_file_system->Mkdir(g_cfg->DirToMake);
     }
@@ -152,7 +108,6 @@ main(int argc, char **argv)
     }
     if (g_cfg->PrintFileSyst) {	// print entire filesystem
         g_file_system->Print();
->>>>>>> 1059bbe0adf18a5cc6e201ee159136ba4600e6be
     }
     
     if (! strcmp(startfilename,"")) {
