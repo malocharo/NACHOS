@@ -80,7 +80,8 @@ main(int argc, char **argv)
       ASSERT(argc > 1);
       argCount = 2;
       startfilename = argv[1];
-    }
+      exit(-1);
+    } else {exit(-1);}
   }
   
   if (g_cfg->Remove) {	// remove Nachos file
@@ -109,7 +110,6 @@ main(int argc, char **argv)
   if (g_cfg->PrintFileSyst) {	// print entire filesystem
     g_file_system->Print();
   }
-  
   if (! strcmp(startfilename,"")) {
     printf("Warning: No program to start\n");
   }

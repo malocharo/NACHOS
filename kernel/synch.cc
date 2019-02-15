@@ -202,11 +202,12 @@ void Lock::Release() {
     IntStatus intStat = g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
 
     if(this->isHeldByCurrentThread()){
-      if(!sleepqueue->IsEmpty())
+      if(!sleepqueue->IsEmpty()) {
         g_scheduler->ReadyToRun((Thread *)sleepqueue->Remove());
-    } else {
+      } else {
       owner = NULL;
       free = true;
+      }
     }
 
     g_machine->interrupt->SetStatus(intStat);
