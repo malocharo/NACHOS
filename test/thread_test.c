@@ -3,7 +3,6 @@
 
 VoidNoArgFunctionPtr func() {
     n_printf("test\n");
-    
 }
 
 int main() {

@@ -119,22 +119,18 @@ Initialize(int argc, char **argv)
   strcpy(filename,CONFIGFILENAME);
 
   // Scan the arguments
-  for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {
-    argCount = 1;
-    if (!strcmp(*argv, (char*)"-d")) {
-      if (argc == 1)
-	debugArgs = (char*)"+";	// turn on all debug flags
-      else {
-	debugArgs = *(argv + 1);
-	argCount = 2;
-      }
-    }
-    
-    if (!strcmp(*argv, (char*)"-s"))
-      debugUserProg = true;
-    if (!strcmp(*argv, (char*)"-f")) {
-      strcpy(filename,*(argv + 1));
-    }
+    for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {
+        argCount = 1;
+        if (!strcmp(*argv, (char*)"-d")) {
+            if (argc == 1) debugArgs = (char*)"+";	// turn on all debug flags
+            else {
+                debugArgs = *(argv + 1);
+                argCount = 2;
+            }
+        }
+        
+        if (!strcmp(*argv, (char*)"-s")) debugUserProg = true;
+        if (!strcmp(*argv, (char*)"-f")) strcpy(filename,*(argv + 1));
   }
 
   // Scan configuration file to set up Nachos parameters
