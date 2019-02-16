@@ -53,10 +53,18 @@ static void threadStart(int func)
 //	\param func is the address of the function to execute.
 */
 //----------------------------------------------------------------------
+#ifndef ETUDIANTS_TP
 ThreadId threadCreate(char * debug_name, VoidNoArgFunctionPtr func) 
 { 
     return newThread(debug_name, (int)threadStart,(int)func);
 }
+#endif
+#ifdef ETUDIANTS_TP
+ThreadId threadCreate(char * debug_name, VoidNoArgFunctionPtr func, int nice) 
+{ 
+    return newThread(debug_name, (int)threadStart,(int)func,nice);
+}
+#endif
 
 //----------------------------------------------------------------------
 // n_strcmp()

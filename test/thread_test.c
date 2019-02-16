@@ -7,6 +7,6 @@ VoidNoArgFunctionPtr func() {
 
 int main() {
 	
-    threadCreate("test",func);
+    threadCreate("test",func,0);
     return 0;
 }
