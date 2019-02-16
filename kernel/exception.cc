@@ -175,9 +175,17 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 	  }
 	  Thread *ptThread = new Thread(name);
 	  int32_t tid = g_object_ids->AddObject(ptThread);
-	  error = ptThread->Start(p,
+		#ifdef ETUDIANTS_TP
+		error = ptThread->Start(p,
+				  p->addrspace->getCodeStartAddress(),
+				  -1,0); // we set def nice at 0, might change it later TODO
+		#endif
+		#ifndef ETUDIANTS_TP
+		error = ptThread->Start(p,
 				  p->addrspace->getCodeStartAddress(),
 				  -1);
+		#endif
+	  
 	  if (error != NO_ERROR) {
 	    g_machine->WriteIntRegister(2,ERROR);	
 	    if (error == OUT_OF_MEMORY)
@@ -215,8 +223,15 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 	  ptThread = new Thread(thr_name);
 	  int32_t tid;
 	  tid = g_object_ids->AddObject(ptThread);
+		#ifndef ETUDIANTS_TP
 	  err = ptThread->Start(g_current_thread->GetProcessOwner(),
 				fun, arg);
+		#endif
+		#ifdef ETUDIANTS_TP
+		int nice = g_machine->ReadIntRegister(7);
+		err = ptThread->Start(g_current_thread->GetProcessOwner(),
+				fun,arg,nice);
+		#endif
 	  if (err != NO_ERROR) {
 	    g_machine->WriteIntRegister(2,ERROR);
 	    g_syscall_error->SetMsg((char*)"",err);

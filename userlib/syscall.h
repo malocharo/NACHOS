@@ -100,8 +100,13 @@ ThreadId Exec(char *name);
 /* Create a new thread in the current process
  * Return thread identifier
  */
+#ifndef ETUDIANTS_TP
 ThreadId newThread(char * debug_name, int func, int arg);
- 
+#endif
+#ifdef ETUDIANTS_TP
+ThreadId newThread(char * debug_name, int func, int arg, int nice);
+#endif
+
 /* Only return once the the thread "id" has finished. 
  */
 int Join(ThreadId id);
