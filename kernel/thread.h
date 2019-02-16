@@ -127,6 +127,7 @@ public:
 
   char* GetName() { return (name); }
   Process* GetProcessOwner() { return process; }
+  int GetNice() { return nice;}
 
 protected:
   //! Thread name (for debugging)   

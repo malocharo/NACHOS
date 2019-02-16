@@ -178,7 +178,7 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 		#ifdef ETUDIANTS_TP
 		error = ptThread->Start(p,
 				  p->addrspace->getCodeStartAddress(),
-				  -1,0); // we set def nice at 0, might change it later TODO
+				  -1,0); // TODO we set def nice at 0, might change it later 
 		#endif
 		#ifndef ETUDIANTS_TP
 		error = ptThread->Start(p,
