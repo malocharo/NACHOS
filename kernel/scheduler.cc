@@ -53,8 +53,21 @@ Scheduler::~Scheduler()
 void
 Scheduler::ReadyToRun (Thread *thread)
 {
+    #ifndef ETUDIANTS_TP
     DEBUG('t', (char *)"Putting thread %s in ready list.\n", thread->GetName());
     readyList->Append((void *)thread);
+    #endif
+
+    // this implementation is mega con
+    // we just create a list that is sorted by the 'nice' value, but this function sort by decreasing value 
+    // and we don't want that, because for our system -20 is the higher priority. So we add a "-" minus at the value return by thread->GetNice()
+    // Positive value are now negative and vice versa. This might blackslash some day tho.But at least, when readyList->Remove() is called, it's
+    // the thread with the higher priority that is return.
+    #ifdef ETUDIANTS_TP
+    DEBUG('t', (char *)"Putting thread %s in ready list.\n", thread->GetName());
+    readyList->SortedInsert((void*)thread,-thread->GetNice());
+    #endif
+    
 }
 
 //----------------------------------------------------------------------
