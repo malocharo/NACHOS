@@ -181,7 +181,7 @@ Initialize(int argc, char **argv)
   
   // Create the root thread 
   g_current_thread = new Thread((char*)"main-temp");
-  errStatus = g_current_thread->Start(rootProcess, 0x0, -1);
+  errStatus = g_current_thread->Start(rootProcess, 0x0, -1,0);
   if (errStatus != NO_ERROR) {
     fprintf(stderr,"Nachos boot error: cannot start thread\n");
     Exit(-1);

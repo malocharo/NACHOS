@@ -122,7 +122,7 @@ main(int argc, char **argv)
         g_machine->mmu->translationTable = p->addrspace->translationTable;
         Thread * t = new Thread(startfilename);
         g_object_ids->AddObject(t);
-        err = t->Start(p, p->addrspace->getCodeStartAddress(), -1);
+        err = t->Start(p, p->addrspace->getCodeStartAddress(), -1,0);
     }
         
     g_current_thread->Finish();	// NOTE: if the procedure "main" 
