@@ -19,7 +19,10 @@
 #include "kernel/copyright.h"
 #include "utility/list.h"
 
+
 class Thread;
+
+extern void SwitchCall(int64_t arg);
 
 class Scheduler {
 public:
