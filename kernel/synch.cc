@@ -80,8 +80,9 @@ Semaphore::P() {
 #endif
 
 #ifdef ETUDIANTS_TP
+    
     IntStatus oldStat = g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
-
+    DEBUG('s',(char *)"P by thread %s value before P is %d\n",g_current_thread->GetName(),this->value);
     this->value--;
     if(this->value < 0){
       this->queue->Append(g_current_thread);
@@ -166,7 +167,7 @@ void Lock::Acquire() {
 #ifdef ETUDIANTS_TP
     IntStatus intStat =  g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
     DEBUG('i',(char *)"Previous interrupt setting %d \n",intStat);
-    DEBUG('s',(char *)"Acquire %d",free);
+    DEBUG('s',(char *)"Acquire %d\n",free);
 
     if(!free) {
       sleepqueue->Append(g_current_thread);

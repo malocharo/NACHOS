@@ -125,8 +125,8 @@ Thread *oldThread = g_current_thread;
     	nextThread->RestoreProcessorState();
 	nextThread->RestoreSimulatorState();
     }
-    PendingInterrupt *toOccur = new PendingInterrupt(this->SwitchTo,(int64_t)g_scheduler->FindNextToRun(),(Time)10000,TIMER_INT);
-    
+    PendingInterrupt *toOccur = new PendingInterrupt(SwitchCall,(int64_t)this->FindNextToRun(),(Time)10000,TIMER_INT);
+
     DEBUG('t', (char *)"Now in thread \"%s\" time %llu\n", g_current_thread->GetName(),g_stats->getTotalTicks());
 
     // If the old thread gave up the processor because it was finishing,
@@ -148,4 +148,9 @@ Scheduler::Print()
     printf("Ready list contents: [");
     readyList->Mapcar((VoidFunctionPtr) ThreadPrint);
     printf("]\n");
+}
+
+void SwitchCall(int64_t arg)
+{
+    g_scheduler->SwitchTo((Thread*)arg);
 }
