@@ -2,7 +2,8 @@
 #include "userlib/syscall.h"
 
 VoidNoArgFunctionPtr func() {
-    n_printf("test\n");
+    while(1)
+        n_printf("test\n");
 }
 
 int main() {
