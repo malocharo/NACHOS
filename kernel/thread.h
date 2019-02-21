@@ -30,6 +30,14 @@ class Thread;
 // Size of the simulator's execution stack
 #define SIMULATORSTACKSIZE	(32 * 1024) // in Bytes
 
+// Unix-like priority system, the process with the lower value is the process with the most priority
+// def value is 0. 
+#ifdef ETUDIANTS_TP
+#define MAX_NICE 19
+#define MIN_NICE -20
+#define DEF_NICE 0
+#endif
+
 // External function, dummy routine whose sole job is to call Thread::Print.
 extern void ThreadPrint(long arg);	 
 
@@ -72,7 +80,13 @@ public:
   ~Thread();			
 
   //! Start a thread, attaching it to a process (return NoError on success)
+  #ifndef ETUDIANTS_TP
   int Start(Process *owner, int32_t func, int arg);
+  #endif
+  #ifdef ETUDIANTS_TP
+  // https://tampub.uta.fi/bitstream/handle/10024/96864/GRADU-1428493916.pdf
+  int Start(Process *owner, int32_t func, int arg, int nice);
+  #endif
 
   //! Wait for another thread to finish its execution
   void Join(Thread *Idthread);
@@ -113,6 +127,7 @@ public:
 
   char* GetName() { return (name); }
   Process* GetProcessOwner() { return process; }
+  int GetNice() { return nice;}
 
 protected:
   //! Thread name (for debugging)   
@@ -132,6 +147,12 @@ public:
   ObjectType type;
 
   int stackPointer;
+
+  #ifdef ETUDIANTS_TP
+  // thread priority, set at the start of the thread
+  // maybe implement a sys call to change it while running
+  int nice;
+  #endif
 };
 
 #endif // THREAD_H

@@ -24,7 +24,13 @@ typedef unsigned int size_t;
 
 // Thread management
 // ----------------------------
+#ifndef ETUDIANTS_TP
 ThreadId threadCreate(char * debug_name, VoidNoArgFunctionPtr func);
+#endif
+#ifdef ETUDIANTS_TP
+ThreadId threadCreate(char * debug_name, VoidNoArgFunctionPtr func, int nice);
+#endif
+
 
 // Input/Output operations :
 // ------------------------------------

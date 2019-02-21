@@ -99,6 +99,7 @@ Thread::~Thread()
 // \return NO_ERROR on success, an error code on error
 */
 //----------------------------------------------------------------------
+#ifndef ETUDIANTS_TP
 int Thread::Start(Process *owner,
 		  int32_t func, int arg)
 {
@@ -128,7 +129,39 @@ int Thread::Start(Process *owner,
   return NO_ERROR;
   #endif
 }
+#endif
+#ifdef ETUDIANTS_TP
+int Thread::Start(Process *owner,
+		  int32_t func, int arg, int nice)
+{
+  #ifndef ETUDIANTS_TP
+  ASSERT(process == NULL);
+  printf("**** Warning: method Thread::Start is not implemented yet\n");
+  exit(-1);
+  #endif
 
+  #ifdef ETUDIANTS_TP
+  this->process = owner;
+  this->process->numThreads++;
+  this->nice = nice;
+  //M : Since the process got an addresse space, it make more sense to call it this way
+  // but I wouldn't put mes couilles à couper
+  this->stackPointer = this->process->addrspace->StackAllocate();
+  int8_t* baseStackAddr = AllocBoundedArray(SIMULATORSTACKSIZE);
+
+
+  this->InitSimulatorContext(baseStackAddr,SIMULATORSTACKSIZE);
+  //M : Since func is not a pointer but a value, I suppose it contains this addr of the func
+  //and this addr is where we want the PC register to be at the beginning of the thread
+  //same for the arg. 
+  this->InitThreadContext(func,this->stackPointer,arg);
+
+  g_alive->Append(this);
+  g_scheduler->ReadyToRun(this);
+  return NO_ERROR;
+  #endif
+}
+#endif
 //----------------------------------------------------------------------
 // Thread::InitThreadContext
 /*!	Set the initial values for the thread contact

@@ -22,13 +22,6 @@ VoidNoArgFunctionPtr func1() {
 
 int main() {
 	
-    sema = SemCreate("semaTest",0);
-    sema1 = SemCreate("semaTest1",0);
-    threadCreate("test",func);
-    threadCreate("test1",func1);
-    SemDestroy(sema);
-    SemDestroy(sema1);
-    n_printf("i = %d\n",i);
-
+    threadCreate("test",func,0);
     return 0;
 }
