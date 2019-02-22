@@ -319,10 +319,10 @@ FileHeader::Print()
     char data[g_cfg->SectorSize];
 
     printf("FileHeader contents.  File size: %d.  File blocks:\n", numBytes);
-    for (i = 0; i < numSectors; i++)
+   /* for (i = 0; i < numSectors; i++)
 	printf("%d ", dataSectors[i]);
-    printf("\nFile contents:\n");
-    for (i = k = 0; i < numSectors; i++) {
+     printf("\nFile contents:\n");
+   for (i = k = 0; i < numSectors; i++) {
 	g_disk_driver->ReadSector(dataSectors[i], data);
         for (j = 0; (j < g_cfg->SectorSize) && (k < numBytes); j++, k++) {
 	    if ('\040' <= data[j] && data[j] <= '\176')   // isprint(data[j])
@@ -331,7 +331,7 @@ FileHeader::Print()
 		printf("\\%x", (unsigned char)data[j]);
 	}
         printf("\n"); 
-    }
+    }*/
 }
 
 //----------------------------------------------------------------------
