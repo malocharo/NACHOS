@@ -38,18 +38,28 @@ SemId sema1;
 SemId sema2;
 
 VoidNoArgFunctionPtr testSema1(){
-  P(sema1);
+ /* P(sema1);
   n_printf("Test de wait sema1 \n");
   V(sema2);
-  n_printf("Wait finis sema1 \n");
+  n_printf("Wait finis sema1 \n");*/
+  int a = 2;
+  while(a == 2 ){
+    a = 1;
+    n_printf("a = %d\n",a);
+  }
   return 0;
 }
 
 VoidNoArgFunctionPtr testSema2(){
-  V(sema1);
+ /* V(sema1);
   n_printf("Test de wait sema 2 \n");
   P(sema2);
-  n_printf("Wait finis sema2 \n");
+  n_printf("Wait finis sema2 \n");*/
+  int b = 1;
+  while(b == 1){
+    b = 2;
+    n_printf("b = %d\n",b);
+  }
   return 0;
 }
 // test classique de RDV le test doit afficher :
@@ -59,14 +69,15 @@ VoidNoArgFunctionPtr testSema2(){
 //Wait finis sema2 
 //dans cet ordre
 // si destruction des semaphore alors ça ne fonctionne pas car le thread parent s'execute jusqu'au bout
-int main() {
-  n_printf("Debut du programme de test");
+int main(int argc, char ** argv) {
+  n_printf("Debut du programme de test \n");
+  n_printf("nom prog %s\n",argv[0]);
 
- sema1 = SemCreate((char *)"sema1", 0);
+ /*sema1 = SemCreate((char *)"sema1", 0);
  sema2 = SemCreate((char *)"sema2", 0);
 
   threadCreate((char *)"process1", (VoidNoArgFunctionPtr)&testSema1,0);
-  threadCreate((char *)"process2", (VoidNoArgFunctionPtr)&testSema2,0);
-
+  threadCreate((char *)"process2", (VoidNoArgFunctionPtr)&testSema2,-15);
+*/
   return 0;
 }

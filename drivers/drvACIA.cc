@@ -37,8 +37,20 @@
 
 DriverACIA::DriverACIA()
 {
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: contructor of the ACIA driver not implemented yet\n");
   exit(-1);
+  #endif
+
+  
+  #ifdef ETUDIANTS_TP
+  this->send_sema = new Semaphore((char*)"sending_sema_acia",1);
+  this->ind_send = 0;
+  if(g_cfg->ACIA == ACIA_BUSY_WAITING){
+    this->receive_sema = new Semaphore((char*)"receiving_sema_acia",1);
+    g_machine->acia->SetWorkingMode(BUSY_WAITING);
+  }
+  #endif
 }
 
 //-------------------------------------------------------------------------
@@ -49,9 +61,29 @@ DriverACIA::DriverACIA()
 
 int DriverACIA::TtySend(char* buff)
 { 
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: method Tty_Send of the ACIA driver not implemented yet\n");
   exit(-1);
   return 0;
+  #endif
+
+  #ifdef ETUDIANTS_TP
+  this->send_sema->P();
+  this->ind_send = 0;
+  if(g_cfg->ACIA == ACIA_BUSY_WAITING){
+    char c;
+    do
+    {
+      while(g_machine->acia->GetOutputStateReg() == FULL); // attente active sur le registre d'envoi
+      c = buff[this->ind_send++];
+      g_machine->acia->PutChar(c);
+
+    } while ((c != '\0') && this->ind_send < BUFFER_SIZE);  
+    
+  }
+  this->send_sema->V();
+  return this->ind_send;
+  #endif
 }
 
 //-------------------------------------------------------------------------
@@ -63,9 +95,27 @@ int DriverACIA::TtySend(char* buff)
 
 int DriverACIA::TtyReceive(char* buff,int lg)
 {
-   printf("**** Warning: method Tty_Receive of the ACIA driver not implemented yet\n");
+  #ifndef ETUDIANTS_TP
+  printf("**** Warning: method Tty_Receive of the ACIA driver not implemented yet\n");
   exit(-1);
   return 0;
+  #endif
+  #ifdef ETUDIANTS_TP
+  #endif
+
+  this->receive_sema->P();
+  this->ind_rec = 0;
+  char c;
+  if(g_cfg->ACIA == ACIA_BUSY_WAITING) {
+    do
+    {
+      while(g_machine->acia->GetInputStateReg() == EMPTY); // attente active
+      c = g_machine->acia->GetChar();
+      buff[this->ind_rec++] = c; 
+    } while ((c != '\0') && this->ind_rec < lg && this->ind_rec <BUFFER_SIZE);
+  }
+  this->receive_sema->V();
+  return this->ind_rec;
 }
 
 
