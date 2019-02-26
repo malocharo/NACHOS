@@ -6,7 +6,7 @@ int main() {
     int nb_send;
 
     if((nb_send = TtySend(buff))){
-        n_printf("Tty succesfully send %d byte over %d\n",nb_send,n_strlen(buff));
+        n_printf("Tty succesfully send %d byte over %d\n",nb_send,n_strlen(buff)+1);
         return 0;
     }
     n_printf("error while transmitting byte should be 0  byte => %d",nb_send);
