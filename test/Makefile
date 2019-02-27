@@ -5,7 +5,7 @@
 #
 # To add generate a new program, just update the PROGRAMS target below
 
-PROGRAMS = halt hello shell matmult sort thread_test
+PROGRAMS = halt hello shell matmult sort thread_test msg_send msg_recv
 
 all: $(PROGRAMS)
 
