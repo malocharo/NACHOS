@@ -70,8 +70,8 @@ int DriverACIA::TtySend(char* buff)
   #ifdef ETUDIANTS_TP
   this->send_sema->P();
   this->ind_send = 0;
+  char c;
   if(g_cfg->ACIA == ACIA_BUSY_WAITING){
-    char c;
     do
     {
       while(g_machine->acia->GetOutputStateReg() == FULL); // attente active sur le registre d'envoi
@@ -79,10 +79,24 @@ int DriverACIA::TtySend(char* buff)
       g_machine->acia->PutChar(c);
 
     } while ((c != '\0') && this->ind_send < BUFFER_SIZE);  
-    
+    this->send_sema->V();
   }
-  this->send_sema->V();
+  else if(g_cfg->ACIA == ACIA_INTERRUPT){
+    do
+    {
+      c = buff[this->ind_send];
+      this->send_buffer[this->ind_send++] = c;
+
+    } while ((c != '\0') && this->ind_send < BUFFER_SIZE);
+    // since it works with interrupt we gotta send the first one and leave
+    g_machine->acia->PutChar(this->send_buffer[0]); 
+     // we really only send one char 
+    this->ind_send = 1;
+    // However we don't release the semaphore here since we will still be sending
+  }
+  
   return this->ind_send;
+  
   #endif
 }
 
@@ -100,9 +114,8 @@ int DriverACIA::TtyReceive(char* buff,int lg)
   exit(-1);
   return 0;
   #endif
-  #ifdef ETUDIANTS_TP
-  #endif
 
+  #ifdef ETUDIANTS_TP
   this->receive_sema->P();
   this->ind_rec = 0;
   char c;
@@ -113,9 +126,19 @@ int DriverACIA::TtyReceive(char* buff,int lg)
       c = g_machine->acia->GetChar();
       buff[this->ind_rec++] = c; 
     } while ((c != '\0') && this->ind_rec < lg && this->ind_rec <BUFFER_SIZE);
+    this->receive_sema->V();
+  } else if(g_cfg->ACIA == ACIA_INTERRUPT) {
+    do
+    {
+      // we receive through the buffer that is fill by the interupt handler
+      c = this->receive_buffer[this->ind_rec];
+      buff[this->ind_rec++] = c;
+    } while ((c != '\0') && this->ind_rec < lg && this->ind_rec <BUFFER_SIZE);
+    // however we don't release the sema since we could still be receiving
+    this->ind_rec = 0; // this is more by safety not sure it's useful but at worst it's a redondant affectation
   }
-  this->receive_sema->V();
   return this->ind_rec;
+  #endif
 }
 
 
@@ -129,8 +152,17 @@ int DriverACIA::TtyReceive(char* buff,int lg)
 
 void DriverACIA::InterruptSend()
 {
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: send interrupt handler not implemented yet\n");
   exit(-1);
+  #endif
+  #ifdef ETUDIANTS_TP
+  if (!this->send_buffer[this->ind_send])
+    this->send_sema->V();
+  else
+    g_machine->acia->PutChar(this->send_buffer[this->ind_send++]);
+  return;
+  #endif
 }
 
 //-------------------------------------------------------------------------
@@ -145,6 +177,14 @@ void DriverACIA::InterruptSend()
 
 void DriverACIA::InterruptReceive()
 {
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: receive interrupt handler not implemented yet\n");
   exit(-1);
+  #endif
+  char c;
+  if(!(c == g_machine->acia->GetChar()))
+    this->receive_sema->V();
+  else
+    this->receive_buffer[this->ind_rec++] = c;
+  return;
 }
