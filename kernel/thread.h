@@ -65,6 +65,8 @@ typedef struct {
 
   //! Condition code register.
   int8_t cc;
+
+  TranslationTable *table;
 } threadContextT;
 
 

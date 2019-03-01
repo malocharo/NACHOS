@@ -112,8 +112,7 @@ int Thread::Start(Process *owner,
   #ifdef ETUDIANTS_TP
   this->process = owner;
   this->process->numThreads++;
-  //M : Since the process got an addresse space, it make more sense to call it this way
-  // but I wouldn't put mes couilles à couper
+  
   this->stackPointer = this->process->addrspace->StackAllocate();
   int8_t* baseStackAddr = AllocBoundedArray(SIMULATORSTACKSIZE);
 
@@ -144,8 +143,8 @@ int Thread::Start(Process *owner,
   this->process = owner;
   this->process->numThreads++;
   this->nice = nice;
-  //M : Since the process got an addresse space, it make more sense to call it this way
-  // but I wouldn't put mes couilles à couper
+  this->thread_context.table = g_machine->mmu->translationTable;
+  
   this->stackPointer = this->process->addrspace->StackAllocate();
   int8_t* baseStackAddr = AllocBoundedArray(SIMULATORSTACKSIZE);
 
@@ -421,7 +420,10 @@ Thread::SaveProcessorState()
     this->thread_context.float_registers[i] = g_machine->ReadFPRegister(i);
   
   this->thread_context.cc  = g_machine->ReadCC();
+
+  this->thread_context.table = g_machine->mmu->translationTable;
   #endif
+  
   
 }
 
@@ -446,7 +448,10 @@ Thread::RestoreProcessorState()
     g_machine->WriteFPRegister(i,this->thread_context.float_registers[i]);
   
   g_machine->WriteCC(this->thread_context.cc);
+
+  g_machine->mmu->translationTable = this->thread_context.table;
   #endif
+  
 }
 
 //----------------------------------------------------------------------
