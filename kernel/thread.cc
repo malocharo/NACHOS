@@ -143,7 +143,7 @@ int Thread::Start(Process *owner,
   this->process = owner;
   this->process->numThreads++;
   this->nice = nice;
-  this->thread_context.table = g_machine->mmu->translationTable;
+  
   
   this->stackPointer = this->process->addrspace->StackAllocate();
   int8_t* baseStackAddr = AllocBoundedArray(SIMULATORSTACKSIZE);
@@ -421,7 +421,6 @@ Thread::SaveProcessorState()
   
   this->thread_context.cc  = g_machine->ReadCC();
 
-  this->thread_context.table = g_machine->mmu->translationTable;
   #endif
   
   
@@ -448,9 +447,9 @@ Thread::RestoreProcessorState()
     g_machine->WriteFPRegister(i,this->thread_context.float_registers[i]);
   
   g_machine->WriteCC(this->thread_context.cc);
-
-  g_machine->mmu->translationTable = this->thread_context.table;
+  g_machine->mmu->translationTable = this->process->addrspace->translationTable;
   #endif
+  
   
 }
 
