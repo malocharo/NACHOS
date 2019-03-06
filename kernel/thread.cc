@@ -420,9 +420,8 @@ Thread::SaveProcessorState()
     this->thread_context.float_registers[i] = g_machine->ReadFPRegister(i);
   
   this->thread_context.cc  = g_machine->ReadCC();
-
+  this->process->addrspace->translationTable = g_machine->mmu->translationTable;
   #endif
-  
   
 }
 
