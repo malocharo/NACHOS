@@ -190,6 +190,7 @@ void DriverACIA::InterruptReceive()
   printf("**** Warning: receive interrupt handler not implemented yet\n");
   exit(-1);
   #endif
+  #ifdef ETUDIANTS_TP
   char c;
   if(!(c == g_machine->acia->GetChar())) {
     this->receive_sema->V();
@@ -199,4 +200,5 @@ void DriverACIA::InterruptReceive()
   else
     this->receive_buffer[this->ind_rec++] = c;
   return;
+  #endif
 }

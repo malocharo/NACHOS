@@ -63,7 +63,7 @@ static void SwapELFSectionHeader (Elf32_Shdr *shdr);
 //----------------------------------------------------------------------
 AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 {
-  Elf32_Ehdr elfHdr;      // Header du fichier exécutable
+  Elf32_Ehdr elfHdr;      // Header du fichier exï¿½cutable
 
   *err  = 0;
   translationTable = NULL;
@@ -175,6 +175,13 @@ AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 	  else translationTable->clearBitWriteAllowed(virt_page);
 	  translationTable->clearBitIo(virt_page);
 
+    #ifdef ETUDIANTS_TP
+    translationTable->clearBitValid(virt_page);
+    #endif
+
+    
+
+    #ifndef ETUDIANTS_TP
 	  // Get a page in physical memory, halt of there is not sufficient space
 	  int pp = g_physical_mem_manager->FindFreePage();
 	  if (pp == -1) { 
@@ -213,6 +220,7 @@ AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 	  translationTable->setBitValid(virt_page);
 	  
 	  /* End of code without demand paging */
+    #endif
 	}
     }
   delete [] shnames;
@@ -290,6 +298,27 @@ int AddrSpace::StackAllocate(void)
 	(stackBasePage+numPages)*g_cfg->PageSize);
 
   for (int i = stackBasePage ; i < (stackBasePage + numPages) ; i++) {
+    // set every page so that it will create page default at first call
+    #ifdef ETUDIANTS_TP
+
+    // not in disk yet, -1 as anonymous mapping
+    translationTable->setAddrDisk(i,-1);
+    // means that the page is not in physical mem yet
+    translationTable->clearBitValid(i);
+    // means that the page must be load from exec file, not from swap
+    translationTable->clearBitSwap(i);
+    // allows programm to read and write on this page.
+    translationTable->setBitReadAllowed(i);
+    translationTable->setBitWriteAllowed(i);
+    // this bit it set everytime a I/O is done on this page
+    // meaning we gotta wait till it's over
+    // I suppose it's a active waiting
+    translationTable->clearBitIo(i);
+    #endif
+  
+
+
+    #ifndef ETUDIANTS_TP
     /* Without demand paging */
 
     // Allocate a new physical page for the stack, halt if not page availabke
@@ -313,6 +342,7 @@ int AddrSpace::StackAllocate(void)
     translationTable->setBitWriteAllowed(i);
     translationTable->clearBitIo(i);
     /* End of code without demand paging */
+    #endif
     }
 
   int stackpointer = (stackBasePage+numPages)*g_cfg->PageSize - 4*sizeof(int);
