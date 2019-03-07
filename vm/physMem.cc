@@ -120,9 +120,29 @@ void PhysicalMemManager::ChangeOwner(long numPage, Thread* owner) {
 //-----------------------------------------------------------------
 int PhysicalMemManager::AddPhysicalToVirtualMapping(AddrSpace* owner,int virtualPage) 
 {
+ #ifndef ETUDIANTS_TP
   printf("**** Warning: function AddPhysicalToVirtualMapping is not implemented\n");
   exit(-1);
   return (0);
+  #endif
+  int pp = this->FindFreePage();
+  if(pp == -1) // no free page
+    this->EvictPage(); // we need a new one 
+
+  // we set the physical page
+  this->tpr[pp].locked = true;
+  this->tpr[pp].virtualPage = virtualPage;
+  this->tpr[pp].owner = owner;
+  this->tpr[pp].free = false;
+
+  g_machine->mmu->translationTable->setPhysicalPage(virtualPage,pp);
+  g_machine->mmu->translationTable->setBitValid(virtualPage);
+  this->UnlockPage(pp);
+
+  return pp;
+
+
+
 }
 
 //-----------------------------------------------------------------
@@ -166,9 +186,65 @@ int PhysicalMemManager::FindFreePage() {
 */
 //-----------------------------------------------------------------
 int PhysicalMemManager::EvictPage() {
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: page replacement algorithm is not implemented yet\n");
     exit(-1);
     return (0);
+  #endif
+  // https://en.wikipedia.org/wiki/Page_replacement_algorithm#Clock
+
+  //we save the value of the 'clock' iterator localy
+
+  int iClock = this->i_clock;
+  int iClockInit = iClock;
+
+  // we look for the bit U of every page, if it's equal to 0 we take it
+  // if it's equal to 1 we set it to 0
+  // if we went through every pages without fiding a bit U == 0 we yield the thread
+  // and comeback later
+
+  while(this->tpr[iClock].owner->translationTable->getBitU(this->tpr[iClock].virtualPage)){
+    // bit U == 1,we set to 0
+    this->tpr[iClock].owner->translationTable->setBitU(this->tpr[iClock].virtualPage);
+    
+    if((iClock = iClock % g_cfg->NumPhysPages) == iClockInit)
+    //we went through every pages, didn't anything
+      g_current_thread->Yield();
+
+  }
+
+  // we found a page ! we set it to invalid and lock it
+  this->tpr[iClock].owner->translationTable->clearBitValid(this->tpr[iClock].virtualPage);
+  this->tpr[iClock].locked = true;
+
+  // we are now looking at the state of the page in the swap
+  int bitSwap = this->tpr[iClock].owner->translationTable->getBitSwap(this->tpr[iClock].virtualPage);
+  int bitM    = this->tpr[iClock].owner->translationTable->getBitM(this->tpr[iClock].virtualPage);
+
+  // if both are true it means the page was modified and is present in the swap already
+  // so we need to 'update' the swap
+  if(bitSwap && bitM)
+    g_swap_manager->PutPageSwap(this->tpr[iClock].owner->translationTable->getAddrDisk(this->tpr[iClock].virtualPage),
+    (char *)&g_machine->mainMemory[iClock * g_cfg->PageSize]);
+  else
+  {
+    // we put the page in the swap
+    // -1 means first free sector
+    int addrDisk = g_swap_manager->PutPageSwap(-1,(char *)&g_machine->mainMemory[iClock * g_cfg->PageSize]);
+    this->tpr[iClock].owner->translationTable->setAddrDisk(this->tpr[iClock].virtualPage,addrDisk);
+    this->tpr[iClock].owner->translationTable->setBitSwap(this->tpr[iClock].virtualPage);
+    this->tpr[iClock].owner->translationTable->clearBitM(this->tpr[iClock].virtualPage);
+  }
+  
+  this->i_clock = iClock;
+
+  return iClock;
+
+
+
+
+
+
 }
 
 //-----------------------------------------------------------------

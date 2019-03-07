@@ -46,6 +46,50 @@ ExceptionType PageFaultManager::PageFault(uint32_t virtualPage)
     exit(-1);
     return ((ExceptionType)0);
   #endif
+
+  //first, we check if the virtual page is a I/O process
+  while(g_machine->mmu->translationTable->getBitIo(virtualPage))
+    g_current_thread->Yield();
+  g_machine->mmu->translationTable->setBitIo(virtualPage);
+
+  //we now check the position of the page
+
+  int bitSwap = g_machine->mmu->translationTable->getBitSwap(virtualPage);
+  int addrDisk = g_machine->mmu->translationTable->getAddrDisk(virtualPage);
+  char dataBuffer[g_cfg->PageSize];
+  int pp = g_physical_mem_manager->AddPhysicalToVirtualMapping(g_current_thread->GetProcessOwner()->addrspace,virtualPage);
+  // loaded from the swap
+  if(bitSwap){
+    //we need the diskAddr so we might have to wait
+    while((addrDisk = g_machine->mmu->translationTable->getAddrDisk(virtualPage)) == -1 )
+      g_current_thread->Yield(); // I suppose it should works, if it doesn't just wait like {;}
+    g_swap_manager->GetPageSwap(addrDisk,dataBuffer);
+  }
+    
+  // anonymous mapping
+  else if(!bitSwap && addrDisk == -1)
+    memset(dataBuffer,0,g_cfg->PageSize);
+  //loaded from the disk
+  else if(!bitSwap && addrDisk != -1) {
+    OpenFile * mappedFile = g_current_thread->GetProcessOwner()->addrspace->findMappedFile(virtualPage);
+    if(mappedFile){
+      int byte = mappedFile->ReadAt(dataBuffer,g_cfg->PageSize,addrDisk);
+      // this can bring fragmentation
+      memcpy(&g_machine->mainMemory[pp * g_cfg->PageSize],dataBuffer,byte);
+      g_machine->mmu->translationTable->clearBitIo(virtualPage);
+      return ((ExceptionType)0);
+
+    }
+    else
+      g_current_thread->GetProcessOwner()->exec_file->ReadAt(dataBuffer,g_cfg->PageSize,addrDisk);
+  }
+  // Am I really sure that the buffer is always full ?
+  memcpy(&g_machine->mainMemory[pp * g_cfg->PageSize],dataBuffer,g_cfg->PageSize);
+  g_machine->mmu->translationTable->clearBitIo(virtualPage);
+  return ((ExceptionType)0);
+
+
+
   
 }
 
