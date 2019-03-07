@@ -65,23 +65,12 @@ ExceptionType PageFaultManager::PageFault(uint32_t virtualPage)
       g_current_thread->Yield(); // I suppose it should works, if it doesn't just wait like {;}
     g_swap_manager->GetPageSwap(addrDisk,dataBuffer);
   }
-    
   // anonymous mapping
   else if(!bitSwap && addrDisk == -1)
     memset(dataBuffer,0,g_cfg->PageSize);
   //loaded from the disk
   else if(!bitSwap && addrDisk != -1) {
-    OpenFile * mappedFile = g_current_thread->GetProcessOwner()->addrspace->findMappedFile(virtualPage);
-    if(mappedFile){
-      int byte = mappedFile->ReadAt(dataBuffer,g_cfg->PageSize,addrDisk);
-      // this can bring fragmentation
-      memcpy(&g_machine->mainMemory[pp * g_cfg->PageSize],dataBuffer,byte);
-      g_machine->mmu->translationTable->clearBitIo(virtualPage);
-      return ((ExceptionType)0);
-
-    }
-    else
-      g_current_thread->GetProcessOwner()->exec_file->ReadAt(dataBuffer,g_cfg->PageSize,addrDisk);
+    g_current_thread->GetProcessOwner()->exec_file->ReadAt((char *)&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]), g_cfg->PageSize, addrDisk);
   }
   // Am I really sure that the buffer is always full ?
   memcpy(&g_machine->mainMemory[pp * g_cfg->PageSize],dataBuffer,g_cfg->PageSize);

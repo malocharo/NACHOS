@@ -127,7 +127,7 @@ int PhysicalMemManager::AddPhysicalToVirtualMapping(AddrSpace* owner,int virtual
   #endif
   int pp = this->FindFreePage();
   if(pp == -1) // no free page
-    this->EvictPage(); // we need a new one 
+    pp = this->EvictPage(); // we need a new one 
 
   // we set the physical page
   this->tpr[pp].locked = true;
@@ -239,12 +239,6 @@ int PhysicalMemManager::EvictPage() {
   this->i_clock = iClock;
 
   return iClock;
-
-
-
-
-
-
 }
 
 //-----------------------------------------------------------------
