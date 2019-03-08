@@ -175,13 +175,13 @@ AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 	  else translationTable->clearBitWriteAllowed(virt_page);
 	  translationTable->clearBitIo(virt_page);
 
-    #ifdef ETUDIANTS_TP
+    #ifndef ETUDIANTS_TP
     translationTable->clearBitValid(virt_page);
     #endif
 
     
 
-    #ifndef ETUDIANTS_TP
+    #ifdef ETUDIANTS_TP
 	  // Get a page in physical memory, halt of there is not sufficient space
 	  int pp = g_physical_mem_manager->FindFreePage();
 	  if (pp == -1) { 

@@ -224,7 +224,7 @@ MMU::Translate(uint32_t virtAddr, uint32_t *physAddr, int size, bool writing)
     bool bitWrite = translationTable->getBitWriteAllowed(vpn); 
   // --end test--
   if (!bitRead && !bitWrite) {
-    DEBUG('h', (char *)"virtual page # %d not mapped !\n", vpn);
+    DEBUG('h', (char *)"virtual page # %d at 0x%x not mapped !\n", vpn,virtAddr);
     return ADDRESSERROR_EXCEPTION;
   }
 
