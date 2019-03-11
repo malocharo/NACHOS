@@ -128,7 +128,7 @@ int PhysicalMemManager::AddPhysicalToVirtualMapping(AddrSpace* owner,int virtual
   int pp = this->FindFreePage();
   if(pp == -1) // no free page
     pp = this->EvictPage(); // we need a new one 
-
+  DEBUG('v',(char*)"AddPhysicalToVirtualMapping: physical page %d\n",pp);
   // we set the physical page
   this->tpr[pp].locked = true;
   this->tpr[pp].virtualPage = virtualPage;
@@ -138,7 +138,12 @@ int PhysicalMemManager::AddPhysicalToVirtualMapping(AddrSpace* owner,int virtual
   g_machine->mmu->translationTable->setPhysicalPage(virtualPage,pp);
   g_machine->mmu->translationTable->setBitValid(virtualPage);
   this->UnlockPage(pp);
-
+  DEBUG('v',(char*)"State of the translation table for virtual page %d phys page %d\n",virtualPage,pp);
+  DEBUG('v',(char*)"addrdisk = %d bitReadAllowed = %d bitWriteAllowed = %d  bitSwap %d \n"
+  ,g_machine->mmu->translationTable->getAddrDisk(virtualPage)
+  ,g_machine->mmu->translationTable->getBitReadAllowed(virtualPage)
+  ,g_machine->mmu->translationTable->getBitWriteAllowed(virtualPage)
+  ,g_machine->mmu->translationTable->getBitSwap(virtualPage));
   return pp;
 
 
