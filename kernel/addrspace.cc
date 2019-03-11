@@ -176,7 +176,14 @@ AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 	  translationTable->clearBitIo(virt_page);
 
     #ifdef ETUDIANTS_TP
-    translationTable->clearBitValid(virt_page);
+    // The SHT_NOBITS flag indicates if the section has an image
+	  // in the executable file (text or data section) or not 
+	  // (bss section)
+    	if (section_table[i].sh_type != SHT_NOBITS)
+			  translationTable->setAddrDisk(virt_page, section_table[i].sh_offset + pgdisk*g_cfg->PageSize);
+			else
+				translationTable->setAddrDisk(virt_page,-1);
+			translationTable->clearBitValid(virt_page);
     #endif
 
     
