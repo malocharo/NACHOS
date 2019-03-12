@@ -175,7 +175,6 @@ AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 	  else translationTable->clearBitWriteAllowed(virt_page);
 	  translationTable->clearBitIo(virt_page);
 
-<<<<<<< HEAD
     #ifdef ETUDIANTS_TP
     // The SHT_NOBITS flag indicates if the section has an image
 	  // in the executable file (text or data section) or not 
@@ -185,15 +184,11 @@ AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 			else
 				translationTable->setAddrDisk(virt_page,-1);
 			translationTable->clearBitValid(virt_page);
-=======
-    #ifndef ETUDIANTS_TP
-    translationTable->clearBitValid(virt_page);
->>>>>>> bf142e3750a9a2473fb14641accae9bcaa0fbe45
     #endif
 
     
 
-    #ifdef ETUDIANTS_TP
+    #ifndef ETUDIANTS_TP
 	  // Get a page in physical memory, halt of there is not sufficient space
 	  int pp = g_physical_mem_manager->FindFreePage();
 	  if (pp == -1) { 
