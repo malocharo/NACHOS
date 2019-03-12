@@ -196,6 +196,8 @@ int PhysicalMemManager::EvictPage() {
     exit(-1);
     return (0);
   #endif
+
+  #ifdef ETUDIANTS_TP
   // https://en.wikipedia.org/wiki/Page_replacement_algorithm#Clock
 
   //we save the value of the 'clock' iterator localy
@@ -244,6 +246,12 @@ int PhysicalMemManager::EvictPage() {
   this->i_clock = iClock;
 
   return iClock;
+  #endif
+  
+
+  
+
+  
 }
 
 //-----------------------------------------------------------------
