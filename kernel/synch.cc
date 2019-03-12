@@ -310,3 +310,56 @@ void Condition::Broadcast() {
     g_machine->interrupt->SetStatus(oldStat);
 #endif
 }
+
+#ifdef ETUDIANTS_TP
+#endif
+//----------------------------------------------------------------------
+// Barrier::Barrier
+/*! Create the barrier with a name for debugging and the number of thread that need to be reach
+//  to release the barrier
+*/
+//----------------------------------------------------------------------
+Barrier::Barrier(char * name_debug, int nbThread){
+    this->name = new char[strlen(name_debug) + 1];
+    strcpy(this->name, name_debug);
+    this->nbThread = nbThread;
+    this->reachedThread = 0;
+    this->waitqueue = new Listint;
+    this->type = BARRIER_TYPE;
+}
+
+//----------------------------------------------------------------------
+// Barrier::~Barrier
+/*! 	De-allocate barrier, when no longer needed.
+//      Assumes that nobody is waiting on the barrier.
+*/
+//----------------------------------------------------------------------
+
+Barrier::~Barrier() {
+    type = INVALID_TYPE;
+    ASSERT(waitqueue->IsEmpty());
+    delete[] name;
+    delete waitqueue;
+}
+
+//----------------------------------------------------------------------
+// Barrier::BarrierReach
+/*! 	Put thread to sleep until enough thread are at the barrier
+//      Then release them.
+*/
+//----------------------------------------------------------------------
+
+void Barrier::BarrierReach() {
+    IntStatus oldStat = g_machine->interrupt->SetStatus(INTERRUPTS_OFF);
+    this->reachedThread++;
+    if(this->reachedThread == this->nbThread)
+        while(!this->waitqueue->IsEmpty()) {
+            g_scheduler->ReadyToRun((Thread *)waitqueue->getFirst()->item);
+            waitqueue->RemoveItem(waitqueue->getFirst()->item);
+        }
+    else {
+        waitqueue->Append(g_current_thread);
+        g_current_thread->Sleep();
+    }
+    g_machine->interrupt->SetStatus(oldStat);
+}

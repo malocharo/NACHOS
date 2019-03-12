@@ -321,3 +321,27 @@ Mmap:	addiu $2,$0,SC_MMAP
 	syscall
 	j	$31
 	.end Mmap
+
+	.globl BarCreate
+	.ent	BarCreate
+BarCreate:
+	addiu $2,$0,SC_BAR_CREATE
+	syscall
+	j	$31
+	.end BarCreate
+
+	.globl BarrierReach
+	.ent	BarrierReach
+BarrierReach:
+	addiu $2,$0,SC_BAR_REACH
+	syscall
+	j	$31
+	.end BarrierReach
+
+	.globl BarDestroy
+	.ent	BarDestroy
+BarDestroy:
+	addiu $2,$0,SC_BAR_DESTROY
+	syscall
+	j	$31
+	.end BarDestroy
