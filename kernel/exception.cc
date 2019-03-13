@@ -781,13 +781,13 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 
 	case SC_SEM_CREATE : {
 			DEBUG('e',(char *)"condition variable create\n");
-		uint32_t semAddr = g_machine->ReadIntRegister(4); //read r4 first param
-		int semCount = g_machine->ReadIntRegister(5);// sec param, init value of the sem
-		if(semAddr) { //can be zero,wich show it's an error
-			int sizeParam = GetLengthParam(semAddr);
+		uint32_t barAddr = g_machine->ReadIntRegister(4); //read r4 first param
+		int barCount = g_machine->ReadIntRegister(5);// sec param, init value of the sem
+		if(barAddr) { //can be zero,wich show it's an error
+			int sizeParam = GetLengthParam(barAddr);
 			char name[sizeParam];
-			GetStringParam(semAddr,name,sizeParam);
-			Semaphore * sem = new Semaphore(name,semCount);
+			GetStringParam(barAddr,name,sizeParam);
+			Semaphore * sem = new Semaphore(name,barCount);
 			int32_t objId = g_object_ids->AddObject(sem);
 			g_machine->WriteIntRegister(2,objId); //ret value
 			g_syscall_error->SetMsg((char *)"no error\n",NO_ERROR);
@@ -841,6 +841,54 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 		break;
 	}
 	#endif
+	case SC_BAR_CREATE : {
+		uint32_t barAddr = g_machine->ReadIntRegister(4); //read r4 first param
+		int barCount = g_machine->ReadIntRegister(5);// sec param, init value of the bar
+		if(barAddr) { //can be zero,wich show it's an error
+			int sizeParam = GetLengthParam(barAddr);
+			char name[sizeParam];
+			GetStringParam(barAddr,name,sizeParam);
+			Barrier *barr;
+			barr = new Barrier(name,barCount);
+			int32_t objId = g_object_ids->AddObject(barr);
+			g_machine->WriteIntRegister(2,objId); //ret value
+			g_syscall_error->SetMsg((char *)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char *)"Invalid barrier ID\n",INVALID_BARRIER_ID);
+		}
+		break;
+	}
+
+	case SC_BAR_DESTROY : {
+		uint32_t barId = g_machine->ReadIntRegister(4);
+		Barrier * bar = (Barrier*) g_object_ids->SearchObject(barId);
+		if(bar && bar->type == BARRIER_TYPE) {
+			g_object_ids->RemoveObject(barId);
+			delete bar;
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char*)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid sema ID\n",INVALID_BARRIER_ID);
+		}
+		break;
+	}
+
+	case SC_BAR_REACH : {
+		uint32_t barId = g_machine->ReadIntRegister(4);
+		Barrier * bar = (Barrier*) g_object_ids->SearchObject(barId);
+		if(bar && bar->type == BARRIER_TYPE) {
+			bar->BarrierReach();
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char*)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid sema ID\n",INVALID_BARRIER_ID);
+		}
+		break;
+	}
+	
 
 
        default:

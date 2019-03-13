@@ -28,6 +28,7 @@ typedef enum {
   CONDITION_TYPE = 0xdeefcdcd,
   FILE_TYPE = 0xdeadbeef,
   THREAD_TYPE = 0xbadcafe,
+  BARRIER_TYPE = 0xbadbeaf,
   INVALID_TYPE = 0xf0f0f0f
 } ObjectType;
 

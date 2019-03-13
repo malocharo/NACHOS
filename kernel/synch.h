@@ -148,8 +148,36 @@ private:
   Listint * waitqueue;  //!< Threads asked to wait
 
 public:
+
   //! Object type, for validity checks during system calls (must be the first public field)
   ObjectType type;
 };
+
+
+class Barrier {
+  public:
+  //! Create a barrier and initialize it with the number of thread that has to call before barrier is release
+  Barrier(char * debugName, int nbThread);
+
+  //! Deallocate barrier
+  ~Barrier();
+
+  //! For debugging
+  char* getName() { return (name); }
+
+  //! Increment the number of thread that had reach the barrier yet and release them if needed
+  void BarrierReach();
+
+  private:
+    char *name; //!for debbuging
+    Listint *waitqueue; //!! Thread asked to wait
+    int nbThread; //! number of thread to reach before we release them
+    int reachedThread; //! number of thread currently at the barrier
+  
+  public:
+  //! Object type, for validity checks during system calls (must be the first public field)
+  ObjectType type;
+};
+
 
 #endif // SYNCH_H

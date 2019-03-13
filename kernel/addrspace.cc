@@ -184,7 +184,13 @@ AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 			else
 				translationTable->setAddrDisk(virt_page,-1);
 			translationTable->clearBitValid(virt_page);
+<<<<<<< HEAD
       #endif    
+=======
+    #endif
+
+    
+>>>>>>> 18ff5ff4440cd7c5db8f6583ac5410439b3ea25a
 
     #ifndef ETUDIANTS_TP
 	  // Get a page in physical memory, halt of there is not sufficient space

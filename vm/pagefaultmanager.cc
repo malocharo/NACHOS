@@ -47,39 +47,51 @@ ExceptionType PageFaultManager::PageFault(uint32_t virtualPage)
     return ((ExceptionType)0);
   #endif
 
-  //first, we check if the virtual page is a I/O process
-  while(g_machine->mmu->translationTable->getBitIo(virtualPage))
-    g_current_thread->Yield();
-  g_machine->mmu->translationTable->setBitIo(virtualPage);
+  #ifdef ETUDIANTS_TP
 
-  //we now check the position of the page
+  //first, we check if the virtual page is in an  I/O process
+	while(g_machine->mmu->translationTable->getBitIo(virtualPage))
+		g_current_thread->Yield();
+	// if the page isn't in physical mem
+	if(!g_machine->mmu->translationTable->getBitValid(virtualPage))
+	{
+    // we mark the page as in I/O PROCESS
+		g_machine->mmu->translationTable->setBitIo(virtualPage);
+		int addrDisk = g_machine->mmu->translationTable->getAddrDisk(virtualPage);
+		int pp = g_physical_mem_manager->AddPhysicalToVirtualMapping(g_current_thread->GetProcessOwner()->addrspace, virtualPage);
+    //set the page number in phys memory
+		g_machine->mmu->translationTable->setPhysicalPage(virtualPage,pp);
+      // loaded from the swap area
+		if(g_machine->mmu->translationTable->getBitSwap(virtualPage))
+		{
+      //we need the diskAddr so we might have to wait
+			while((addrDisk = g_machine->mmu->translationTable->getAddrDisk(virtualPage)) == -1)
+				g_current_thread->Yield(); // I suppose it should works, if it doesn't just wait like {;}
+      // we fill up the main memory with the data stored at addrDisk
+			g_swap_manager->GetPageSwap(addrDisk, (char *)&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]));
+		}
+		else
+		{
+        // anonymous mapping
+        // fill with zero
+			if(addrDisk == -1)
+				memset(&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]), 0, g_cfg->PageSize);
+			else
+        //loaded from the executable on disk
+				g_current_thread->GetProcessOwner()->exec_file->ReadAt((char *)&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]), g_cfg->PageSize, addrDisk);
+			
+		}
+    // now the page is in physical mem
+		g_machine->mmu->translationTable->setBitValid(virtualPage);
+    // we release the IO bit
+		g_machine->mmu->translationTable->clearBitIo(virtualPage);
+		}	
+	
+	return NO_EXCEPTION;
+#endif
 
-  int bitSwap = g_machine->mmu->translationTable->getBitSwap(virtualPage);
-  int addrDisk = g_machine->mmu->translationTable->getAddrDisk(virtualPage);
-  DEBUG('v',(char*)"PageFault : bitSwap = %d : addrDisk = %d\n",bitSwap,addrDisk);
-  char dataBuffer[g_cfg->PageSize];
-  int pp = g_physical_mem_manager->AddPhysicalToVirtualMapping(g_current_thread->GetProcessOwner()->addrspace,virtualPage);
-  DEBUG('v',(char*)"PageFault : physical page = %d\n",pp);
-  // loaded from the swap
-  if(bitSwap){
-    //we need the diskAddr so we might have to wait
-    while((addrDisk = g_machine->mmu->translationTable->getAddrDisk(virtualPage)) == -1 )
-      g_current_thread->Yield(); // I suppose it should works, if it doesn't just wait like {;}
-    g_swap_manager->GetPageSwap(addrDisk,dataBuffer);
-    DEBUG('v',(char*)"PageFault : loaded from swap at %d : %s\n",addrDisk,dataBuffer);
-    memcpy(&g_machine->mainMemory[pp * g_cfg->PageSize],dataBuffer,g_cfg->PageSize);
-  }
-  // anonymous mapping
-  else if(!bitSwap && addrDisk == -1) {
-    memset(dataBuffer,0,g_cfg->PageSize);
-    memcpy(&g_machine->mainMemory[pp * g_cfg->PageSize],dataBuffer,g_cfg->PageSize);
-  }
-  //loaded from the disk
-  else if(!bitSwap && addrDisk != -1) {
-    g_current_thread->GetProcessOwner()->exec_file->ReadAt((char *)&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]), g_cfg->PageSize, addrDisk);
-  }
-  g_machine->mmu->translationTable->clearBitIo(virtualPage);
-  return ((ExceptionType)0);
+
+  
 }
 
 

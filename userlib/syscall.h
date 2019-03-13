@@ -61,7 +61,11 @@
 #define SC_REMOVE        30
 #define SC_FSLIST        31
 #define SC_SYS_TIME	 32 
-#define SC_MMAP		 33 
+#define SC_MMAP		 33
+
+#define SC_BAR_CREATE 34
+#define SC_BAR_REACH 35
+#define SC_BAR_DESTROY 36 
 
 #ifndef IN_ASM
 
@@ -271,6 +275,21 @@ int TtyReceive(char *mess,int length);
 /* Map an opened file in memory. Size is the size to be mapped in bytes.
 */
 int Mmap(OpenFileId f, int size);
+
+
+/* System calls concerning barrier */
+/*Barrier are used to create a rendez vous between thread*/
+typedef int BarId;
+
+/*Create a new barrier*/
+BarId BarCreate(char*debugName,int nbThread);
+/*To be call in the thread */
+int BarrierReach(BarId id);
+
+/*Destroy the barrier*/
+
+int BarDestroy(BarId id);
+
 
 #endif // IN_ASM
 #endif // SYSCALL_H
