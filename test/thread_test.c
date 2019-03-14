@@ -1,10 +1,11 @@
 #include "userlib/syscall.h"
 #include "userlib/libnachos.h"
-/*LockId lock;
+LockId lock;
 
 VoidNoArgFunctionPtr compute(){
+  int i;
   LockAcquire(lock); 
-  for (int i = 0; i < 5; i++) 
+  for (i = 0; i < 5; i++) 
     n_printf("Test des locks %d\n", i);
   LockRelease(lock);
   return 0;
@@ -12,8 +13,9 @@ VoidNoArgFunctionPtr compute(){
 
 
 VoidNoArgFunctionPtr computeNoLock(){
-  for (int i = 0; i < 5; i++) 
-    n_printf("Test des (pas) locks %d\n", i);
+  int i = 0;
+  for (i = 0; i < 5; i++) 
+    n_printf("Test sans locks %d\n", i);
  return 0;
 }
 // pour l'instant la stack n'est pas assez grande(issou), donc commentez un bloc pour voir la demo d'un puis l'autre
@@ -21,16 +23,16 @@ VoidNoArgFunctionPtr computeNoLock(){
 // computeNoLock doit affiche 0 0 1 1 2 2 3 3 4 4
 // si on LockDestroy(lock) dans le main, le lock n'existe plus, car le thread "main" se termine sans attendre ses enfants (et pas d'interupt)
 int main() {
-
+  int i;
   //lock = LockCreate((char *)"Lock ");
   //for (int i = 0; i < 2; i++) 
   //  threadCreate((char*)"process " + i, (VoidNoArgFunctionPtr) &compute,0);
 
-  for (int i = 0; i < 2; i++) 
+  for (i = 0; i < 2; i++) 
     threadCreate((char*)"process " + i, (VoidNoArgFunctionPtr) &computeNoLock,0);
 
   return 0;
-}*/
+}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
@@ -81,24 +83,28 @@ int main() {
   return 0;
 }
 */
-
+/*
 BarId bar;
 
 
-/*VoidNoArgFunctionPtr testBar1() {
+VoidNoArgFunctionPtr testBar1() {
+  BarrierReach(bar);
+  n_printf("thread 3 : should be print in 2nd or 3 position\n");
+  return 0;
+}
+VoidNoArgFunctionPtr testBar2() {
+
   BarrierReach(bar);
   n_printf("thread 1 : should be print in 2nd or 3 position\n");
-  return 0;
-}*/
-VoidNoArgFunctionPtr testBar2() {
-  BarrierReach(bar);
-  n_printf("thread 2 : should be print in 2nd or 3 position\n");
+  
   return 0;
 }
 
 VoidNoArgFunctionPtr testBar3() {
-  n_printf("thread 3 : should be print in 1 position\n");
+  
+  n_printf("thread 2 : should be print in 1 position\n");
   BarrierReach(bar);
+  
   return 0;
 }
 
@@ -106,9 +112,11 @@ int main() {
   n_printf("Debut du programme de test \n");
   bar = BarCreate((char*)"barrier 1",2);
 
-  threadCreate((char *)"process2", (VoidNoArgFunctionPtr)&testBar2,0);
+  threadCreate((char *)"process1", (VoidNoArgFunctionPtr)&testBar2,0);
   threadCreate((char *)"process2", (VoidNoArgFunctionPtr)&testBar3,0);
+  threadCreate((char *)"process3", (VoidNoArgFunctionPtr)&testBar1,0);
 
   return 0;
 
 }
+*/

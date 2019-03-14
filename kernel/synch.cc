@@ -356,6 +356,7 @@ void Barrier::BarrierReach() {
         while(!this->waitqueue->IsEmpty()) {
             g_scheduler->ReadyToRun((Thread *)waitqueue->getFirst()->item);
             waitqueue->RemoveItem(waitqueue->getFirst()->item);
+            this->reachedThread = 0; // we reset the value so if we can call the barrier in a loop
         }
     else {
         waitqueue->Append(g_current_thread);
