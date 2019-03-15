@@ -1,6 +1,6 @@
 #include "userlib/syscall.h"
 #include "userlib/libnachos.h"
-LockId lock;
+/*LockId lock;
 
 VoidNoArgFunctionPtr compute(){
   int i;
@@ -24,44 +24,34 @@ VoidNoArgFunctionPtr computeNoLock(){
 // si on LockDestroy(lock) dans le main, le lock n'existe plus, car le thread "main" se termine sans attendre ses enfants (et pas d'interupt)
 int main() {
   int i;
-  //lock = LockCreate((char *)"Lock ");
-  //for (int i = 0; i < 2; i++) 
-  //  threadCreate((char*)"process " + i, (VoidNoArgFunctionPtr) &compute,0);
+  lock = LockCreate((char *)"Lock ");
+  for ( i = 0; i < 2; i++) 
+    threadCreate((char*)"process " + i, (VoidNoArgFunctionPtr) &compute,0);
 
-  for (i = 0; i < 2; i++) 
-    threadCreate((char*)"process " + i, (VoidNoArgFunctionPtr) &computeNoLock,0);
+  //for (i = 0; i < 2; i++) 
+    //threadCreate((char*)"process " + i, (VoidNoArgFunctionPtr) &computeNoLock,0);
 
   return 0;
 }
-
+*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
 SemId sema1;
 SemId sema2;
 
 VoidNoArgFunctionPtr testSema1(){
-  P(sema1);
+  //P(sema1);
   n_printf("Test de wait sema1 \n");
-  V(sema2);
-  n_printf("Wait finis sema1 \n");
-  int a = 2;
-  while(a == 2 ){
-    a = 1;
-    n_printf("a = %d\n",a);
-  }
+  //V(sema2);
+  n_printf("Wait fini sema1 \n");
   return 0;
 }
 
 VoidNoArgFunctionPtr testSema2(){
-  V(sema1);
+  //V(sema1);
   n_printf("Test de wait sema 2 \n");
-  P(sema2);
-  n_printf("Wait finis sema2 \n");
-  int b = 1;
-  while(b == 1){
-    b = 2;
-    n_printf("b = %d\n",b);
-  }
+  //P(sema2);
+  n_printf("Wait fini sema2 \n");
   return 0;
 }
 // test classique de RDV le test doit afficher :
@@ -78,12 +68,12 @@ int main() {
  sema2 = SemCreate((char *)"sema2", 0);
 
   threadCreate((char *)"process1", (VoidNoArgFunctionPtr)&testSema1,0);
-  threadCreate((char *)"process2", (VoidNoArgFunctionPtr)&testSema2,-15);
+  threadCreate((char *)"process2", (VoidNoArgFunctionPtr)&testSema2,0);
 
   return 0;
 }
 */
-/*
+
 BarId bar;
 
 
@@ -95,14 +85,14 @@ VoidNoArgFunctionPtr testBar1() {
 VoidNoArgFunctionPtr testBar2() {
 
   BarrierReach(bar);
-  n_printf("thread 1 : should be print in 2nd or 3 position\n");
+  n_printf("thread 1 : should be print in 2nd or not if the barrier is not release\n");
   
   return 0;
 }
 
 VoidNoArgFunctionPtr testBar3() {
   
-  n_printf("thread 2 : should be print in 1 position\n");
+  n_printf("thread 2 : should be print in 1 position no matter what\n");
   BarrierReach(bar);
   
   return 0;
@@ -114,9 +104,9 @@ int main() {
 
   threadCreate((char *)"process1", (VoidNoArgFunctionPtr)&testBar2,0);
   threadCreate((char *)"process2", (VoidNoArgFunctionPtr)&testBar3,0);
-  threadCreate((char *)"process3", (VoidNoArgFunctionPtr)&testBar1,0);
+  //threadCreate((char *)"process3", (VoidNoArgFunctionPtr)&testBar1,0);
 
   return 0;
 
 }
-*/
+
