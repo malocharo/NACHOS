@@ -11,9 +11,10 @@
 #include "userlib/libnachos.h"
 
 int
-main()
+main(int argc, char**argv)
 {
   n_printf("** ** ** Bonjour le monde ** ** **\n");
+  n_printf("argc = %d\n",argc);
   Exit(0);
   
 }

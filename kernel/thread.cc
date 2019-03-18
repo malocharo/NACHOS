@@ -188,6 +188,7 @@ Thread::InitThreadContext(int32_t initialPCREG,int32_t initialSP, int32_t arg)
     // Arguments
     thread_context.int_registers[4] = arg;
     
+    
     // Set the stack register 
     thread_context.int_registers[STACK_REG] = initialSP;
 }

@@ -870,7 +870,7 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 			g_syscall_error->SetMsg((char*)"no error\n",NO_ERROR);
 		} else {
 			g_machine->WriteIntRegister(2,ERROR);
-			g_syscall_error->SetMsg((char*)"invalid sema ID\n",INVALID_BARRIER_ID);
+			g_syscall_error->SetMsg((char*)"invalid barrier ID\n",INVALID_BARRIER_ID);
 		}
 		break;
 	}
@@ -884,9 +884,23 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 			g_syscall_error->SetMsg((char*)"no error\n",NO_ERROR);
 		} else {
 			g_machine->WriteIntRegister(2,ERROR);
-			g_syscall_error->SetMsg((char*)"invalid sema ID\n",INVALID_BARRIER_ID);
+			g_syscall_error->SetMsg((char*)"invalid barrier ID\n",INVALID_BARRIER_ID);
 		}
 		break;
+	}
+
+	case SC_MMAP : {
+		int32_t fileId = g_machine->ReadIntRegister(4);
+		int32_t fileSize = g_machine->ReadIntRegister(5);
+		OpenFile * file = (OpenFile*)(g_object_ids->SearchObject(fileId));
+		if(file && file->type == FILE_TYPE){
+			int ret = g_current_thread->GetProcessOwner()->addrspace->Mmap(file,fileSize);
+			g_machine->WriteIntRegister(2,NO_ERROR);
+			g_syscall_error->SetMsg((char*)"no error\n",NO_ERROR);
+		} else {
+			g_machine->WriteIntRegister(2,ERROR);
+			g_syscall_error->SetMsg((char*)"invalid file ID\n",INVALID_FILE_ID);
+		}
 	}
 	
 
