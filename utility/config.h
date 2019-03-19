@@ -76,6 +76,11 @@ class Config {
   char DirToMake[MAXSTRLEN];             //!< The name of the directory to make
   char DirToRemove[MAXSTRLEN];           //!< The name of the directory to remove
 
+  //#ifdef ETUDIANTS_TP
+  int UserProgNbArg; //! < The number of argument for the user programme stored in ProgramToRun
+  void ** UserProgArgs; //! < The arguments of the user programm stored in ProgramToRun
+  //#endif
+
   /**
    * Fill-in the configuration object from configuration information stored in a file
    *
