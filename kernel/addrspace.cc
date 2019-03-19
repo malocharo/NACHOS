@@ -394,8 +394,25 @@ int AddrSpace::Alloc(int numPages)
 // ----------------------------------------------------------------------
 int AddrSpace::Mmap(OpenFile *f, int size)
 {
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: method AddrSpace::Mmap is not implemented yet\n");
   exit(-1);
+  #endif
+  
+  this->mapped_files[this->nb_mapped_files].size = size;
+  this->mapped_files[this->nb_mapped_files].file = f;
+
+  // nb of virtual page to be allocated
+  int nbPages = size/g_cfg->PageSize;
+  //to round up to next page boundary
+  if(size%g_cfg->PageSize)
+    ++nbPages;
+  int diskAddr = this->translationTable->getAddrDisk(this->mapped_files[this->nb_mapped_files].first_address);
+  this->mapped_files[this->nb_mapped_files].first_address = this->Alloc(nbPages);
+  ASSERT(this->mapped_files[this->nb_mapped_files].first_address != -1);
+  this->nb_mapped_files++;
+  return this->mapped_files[this->nb_mapped_files-1].first_address;
+
 }
 
 //----------------------------------------------------------------------
@@ -406,8 +423,16 @@ int AddrSpace::Mmap(OpenFile *f, int size)
  */
 //----------------------------------------------------------------------
 OpenFile *AddrSpace::findMappedFile(int32_t addr) {
+  #ifndef ETUDIANTS_TP
   printf("**** Warning: method AddrSpace::findMappedFile is not implemented yet\n");
   exit(-1);
+  #endif
+  // for every mapped file, we look if the param's value is between their first virtual
+  // addr and their last, wich is first_addr + size
+  for(int i = 0; i < this->nb_mapped_files;i++)
+    if(addr >= this->mapped_files[i].first_address && addr <= this->mapped_files[i].first_address + this->mapped_files[i].size)
+      return this->mapped_files[i].file;
+  return NULL;
 
 }
 

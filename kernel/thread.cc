@@ -186,7 +186,10 @@ Thread::InitThreadContext(int32_t initialPCREG,int32_t initialSP, int32_t arg)
     thread_context.int_registers[NEXTPC_REG] = initialPCREG+4;
 
     // Arguments
-    thread_context.int_registers[4] = arg;
+    thread_context.int_registers[4] = g_cfg->UserProgNbArg;
+    int64_t addr = (int64_t)g_cfg->UserProgArgs;
+    thread_context.int_registers[5] = (int32_t)addr;
+    
     
     // Set the stack register 
     thread_context.int_registers[STACK_REG] = initialSP;
