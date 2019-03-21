@@ -28,44 +28,45 @@
 /* system call codes -- used by the stubs to tell the kernel which system call
  * is being asked for
  */
-#define SC_HALT		 0 
-#define SC_EXIT		 1 
-#define SC_EXEC		 2 
-#define SC_JOIN		 3 
-#define SC_CREATE	 4 
-#define SC_OPEN		 5 
-#define SC_READ		 6 
-#define SC_WRITE	 7 
-#define SC_SEEK          8
-#define SC_CLOSE	 9 
-#define SC_NEW_THREAD	 10 
-#define SC_YIELD	 11
-#define SC_PERROR        12
-#define SC_P             13 
-#define SC_V             14
-#define SC_SEM_CREATE    15 
-#define SC_SEM_DESTROY   16
-#define SC_LOCK_CREATE	 17 
-#define SC_LOCK_DESTROY	 18 
-#define SC_LOCK_ACQUIRE	 19 
-#define SC_LOCK_RELEASE	 20 
-#define SC_COND_CREATE	 21 
-#define SC_COND_DESTROY	 22 
-#define SC_COND_WAIT	 23 
-#define SC_COND_SIGNAL	 24
+#define SC_HALT		        0 
+#define SC_EXIT		        1 
+#define SC_EXEC		        2 
+#define SC_JOIN		        3 
+#define SC_CREATE	        4 
+#define SC_OPEN		        5 
+#define SC_READ		        6 
+#define SC_WRITE	        7 
+#define SC_SEEK           8
+#define SC_CLOSE	        9 
+#define SC_NEW_THREAD	    10 
+#define SC_YIELD	        11
+#define SC_PERROR         12
+#define SC_P              13 
+#define SC_V              14
+#define SC_SEM_CREATE     15 
+#define SC_SEM_DESTROY    16
+#define SC_LOCK_CREATE	  17 
+#define SC_LOCK_DESTROY	  18 
+#define SC_LOCK_ACQUIRE	  19 
+#define SC_LOCK_RELEASE	  20 
+#define SC_COND_CREATE	  21 
+#define SC_COND_DESTROY	  22 
+#define SC_COND_WAIT	    23 
+#define SC_COND_SIGNAL	  24
 #define SC_COND_BROADCAST 25
-#define SC_TTY_SEND	 26
-#define SC_TTY_RECEIVE	 27
-#define SC_MKDIR	 28
-#define SC_RMDIR	 29
-#define SC_REMOVE        30
-#define SC_FSLIST        31
-#define SC_SYS_TIME	 32 
-#define SC_MMAP		 33
+#define SC_TTY_SEND	      26
+#define SC_TTY_RECEIVE	  27
+#define SC_MKDIR	        28
+#define SC_RMDIR	        29
+#define SC_REMOVE         30
+#define SC_FSLIST         31
+#define SC_SYS_TIME	      32 
+#define SC_MMAP		        33
 
-#define SC_BAR_CREATE 34
-#define SC_BAR_REACH 35
-#define SC_BAR_DESTROY 36 
+#define SC_BAR_CREATE     34
+#define SC_BAR_REACH      35
+#define SC_BAR_DESTROY    36
+#define SC_EXECV          37
 
 #ifndef IN_ASM
 
@@ -100,6 +101,15 @@ typedef int ThreadId;
  * master thread identifier
  */
 ThreadId Exec(char *name);
+
+
+/* Run the executable, stored in the Nachos file "name" with arguments, and return the 
+ * master thread identifier
+ * DON'T USE IT NOW
+ */
+#ifdef ETUDIANTS_TP
+ThreadId Execv(char *name, int argc, char **argv);
+#endif
 
 /* Create a new thread in the current process
  * Return thread identifier

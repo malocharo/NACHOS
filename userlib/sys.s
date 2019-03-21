@@ -345,3 +345,11 @@ BarDestroy:
 	syscall
 	j	$31
 	.end BarDestroy
+
+	.globl Execv
+	.ent   Execv
+Execv:
+	addiu $2,$0,SC_EXECV
+	syscall
+	j	$31
+	.end Execv

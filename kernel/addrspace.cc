@@ -403,10 +403,7 @@ int AddrSpace::Mmap(OpenFile *f, int size)
   this->mapped_files[this->nb_mapped_files].file = f;
 
   // nb of virtual page to be allocated
-  int nbPages = size/g_cfg->PageSize;
-  //to round up to next page boundary
-  if(size%g_cfg->PageSize)
-    ++nbPages;
+  int nbPages = divRoundUp(size,g_cfg->PageSize);
   int diskAddr = this->translationTable->getAddrDisk(this->mapped_files[this->nb_mapped_files].first_address);
   this->mapped_files[this->nb_mapped_files].first_address = this->Alloc(nbPages);
   ASSERT(this->mapped_files[this->nb_mapped_files].first_address != -1);

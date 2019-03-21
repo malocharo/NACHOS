@@ -902,6 +902,59 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 			g_syscall_error->SetMsg((char*)"invalid file ID\n",INVALID_FILE_ID);
 		}
 	}
+
+	case SC_EXECV : {
+		// The execv system call
+    // Creates a new process (thread+address space)
+    DEBUG('e', (char*)"Process: Execv call.\n");
+	  int32_t addr;
+    size_t size;
+	  char name[MAXSTRLEN];
+	  int error=NO_ERROR;
+		int32_t argc;
+		int32_t argv;
+	  
+	  // Get the process name
+    addr = g_machine->ReadIntRegister(4);
+    size = GetLengthParam(addr);
+    char ch[size];
+	  GetStringParam(addr,ch,size);	
+	  sprintf(name,"master thread of process %s",ch);
+	  Process * p = new Process(ch, &error);
+	  if (error != NO_ERROR) {
+	    g_machine->WriteIntRegister(2,ERROR);
+	    if (error == OUT_OF_MEMORY)
+	      g_syscall_error->SetMsg((char*)"",error);
+	    else
+	      g_syscall_error->SetMsg(ch,error);
+	    break;
+	  }
+	  Thread *ptThread = new Thread(name);
+	  int32_t tid = g_object_ids->AddObject(ptThread);
+		#ifdef ETUDIANTS_TP
+		error = ptThread->Start(p,
+				  p->addrspace->getCodeStartAddress(),
+				  -1,0); // TODO we set def nice at 0, might change it later 
+		#endif
+		#ifndef ETUDIANTS_TP
+		error = ptThread->Start(p,
+				  p->addrspace->getCodeStartAddress(),
+				  -1);
+		#endif
+	  
+	  if (error != NO_ERROR) {
+	    g_machine->WriteIntRegister(2,ERROR);	
+	    if (error == OUT_OF_MEMORY)
+	      g_syscall_error->SetMsg((char*)"",error);
+	    else
+	      g_syscall_error->SetMsg(name,error);
+	    break;
+	  }
+	  g_syscall_error->SetMsg((char*)"",NO_ERROR);
+	  g_machine->WriteIntRegister(2,tid);	
+	  break;
+        }
+	}
 	
 
 
