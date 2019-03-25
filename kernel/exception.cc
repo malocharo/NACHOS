@@ -901,6 +901,7 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 			g_machine->WriteIntRegister(2,ERROR);
 			g_syscall_error->SetMsg((char*)"invalid file ID\n",INVALID_FILE_ID);
 		}
+		break;
 	}
 
 	case SC_EXECV : {
@@ -954,7 +955,7 @@ void ExceptionHandler(ExceptionType exceptiontype, int vaddr)
 	  g_machine->WriteIntRegister(2,tid);	
 	  break;
         }
-	}
+	
 	
 
 

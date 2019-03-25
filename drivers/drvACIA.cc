@@ -138,7 +138,7 @@ int DriverACIA::TtyReceive(char* buff,int lg)
       buff[this->ind_rec++] = c;
     } while ((c != '\0') && this->ind_rec < lg && this->ind_rec <BUFFER_SIZE);
     // however we don't release the sema since we could still be receiving
-    this->ind_rec = 0; // this is more by safety not sure it's useful but at worst it's a redondant affectation
+    //this->ind_rec = 0; // this is more by safety not sure it's useful but at worst it's a redondant affectation
     g_machine->acia->SetWorkingMode(REC_INTERRUPT);
   }
   return this->ind_rec;
@@ -162,6 +162,7 @@ void DriverACIA::InterruptSend()
   #endif
   #ifdef ETUDIANTS_TP
   if (!this->send_buffer[this->ind_send]) {
+    g_machine->acia->PutChar(this->send_buffer[this->ind_send++]);
     this->send_sema->V();
     //we can either receive or send
     g_machine->acia->SetWorkingMode(REC_INTERRUPT | SEND_INTERRUPT); 
@@ -170,8 +171,7 @@ void DriverACIA::InterruptSend()
     g_machine->acia->PutChar(this->send_buffer[this->ind_send++]);
   return;
   #endif
-  // maybe we should set something like g_machine->acia->SetWorkingMode()
-  //but idk the state in wich to put it.
+  
 }
 
 //-------------------------------------------------------------------------
@@ -193,6 +193,7 @@ void DriverACIA::InterruptReceive()
   #ifdef ETUDIANTS_TP
   char c;
   if(!(c == g_machine->acia->GetChar())) {
+    this->receive_buffer[this->ind_rec++] = c;
     this->receive_sema->V();
     //we can either receive or send
     g_machine->acia->SetWorkingMode(REC_INTERRUPT | SEND_INTERRUPT); 
