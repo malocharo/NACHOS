@@ -399,14 +399,18 @@ int AddrSpace::Mmap(OpenFile *f, int size)
   exit(-1);
   #endif
   #ifdef ETUDIANTS_TP
+  printf("----Mapping file %s\n",f->GetName());
   this->mapped_files[this->nb_mapped_files].size = size;
   this->mapped_files[this->nb_mapped_files].file = f;
 
   // nb of virtual page to be allocated
   int nbPages = divRoundUp(size,g_cfg->PageSize);
-  //int diskAddr = this->translationTable->getAddrDisk(this->mapped_files[this->nb_mapped_files].first_address);
-  this->mapped_files[this->nb_mapped_files].first_address = this->Alloc(nbPages);
-  ASSERT(this->mapped_files[this->nb_mapped_files].first_address != -1);
+  int firstPage = this->Alloc(nbPages);
+  ASSERT(firstPage != -1);
+  this->mapped_files[this->nb_mapped_files].first_address = (nbPages + firstPage) * g_cfg->PageSize;
+  for(int i = firstPage;i < firstPage + nbPages;i++) 
+    this->translationTable->setAddrDisk(i,this->mapped_files[this->nb_mapped_files].first_address + g_cfg->PageSize);
+  
   this->nb_mapped_files++;
   
   return this->mapped_files[this->nb_mapped_files-1].first_address;

@@ -76,9 +76,19 @@ ExceptionType PageFaultManager::PageFault(uint32_t virtualPage)
         // fill with zero
 			if(addrDisk == -1)
 				memset(&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]), 0, g_cfg->PageSize);
-			else
+			else{
         //loaded from the executable on disk
-				g_current_thread->GetProcessOwner()->exec_file->ReadAt((char *)&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]), g_cfg->PageSize, addrDisk);
+				OpenFile *f = g_current_thread->GetProcessOwner()->addrspace->findMappedFile(addrDisk);
+				if(f)
+				{
+					DEBUG('f',"-------------found mapped file %s in pagedefault method\n",f->GetName());
+				}
+				else
+				{
+					g_current_thread->GetProcessOwner()->exec_file->ReadAt((char *)&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]), g_cfg->PageSize, addrDisk);
+					DEBUG('f',"written in main mem file %s\n",g_current_thread->GetProcessOwner()->exec_file->GetName());
+				}
+			}
 			
 		}
     // now the page is in physical mem
