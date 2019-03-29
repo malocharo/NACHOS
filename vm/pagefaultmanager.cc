@@ -79,6 +79,7 @@ ExceptionType PageFaultManager::PageFault(uint32_t virtualPage)
 			else{
         //loaded from the executable on disk
 				OpenFile *f = g_current_thread->GetProcessOwner()->addrspace->findMappedFile(addrDisk);
+				DEBUG('f',"*********Openfile %x at addrDisk = %d\n",f,addrDisk);
 				if(f)
 				{
 					DEBUG('f',"-------------found mapped file %s in pagedefault method\n",f->GetName());

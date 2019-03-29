@@ -398,8 +398,8 @@ int AddrSpace::Mmap(OpenFile *f, int size)
   printf("**** Warning: method AddrSpace::Mmap is not implemented yet\n");
   exit(-1);
   #endif
-  #ifdef ETUDIANTS_TP
-  printf("----Mapping file %s\n",f->GetName());
+  //#ifdef ETUDIANTS_TP
+  DEBUG('f',"----Mapping file %s\n",f->GetName());
   this->mapped_files[this->nb_mapped_files].size = size;
   this->mapped_files[this->nb_mapped_files].file = f;
 
@@ -409,12 +409,25 @@ int AddrSpace::Mmap(OpenFile *f, int size)
   ASSERT(firstPage != -1);
   this->mapped_files[this->nb_mapped_files].first_address = (nbPages + firstPage) * g_cfg->PageSize;
   for(int i = firstPage;i < firstPage + nbPages;i++) 
-    this->translationTable->setAddrDisk(i,this->mapped_files[this->nb_mapped_files].first_address + g_cfg->PageSize);
-  
+  {
+    this->translationTable->clearBitValid(i);    
+    this->translationTable->setAddrDisk(i,this->mapped_files[this->nb_mapped_files].first_address + (g_cfg->PageSize*(i-firstPage)));
+    DEBUG('f',"---------------addrDisk %d for virtualPage %d\n",this->mapped_files[this->nb_mapped_files].first_address + (g_cfg->PageSize*(i-firstPage)),i);
+    // means that the page is not in physical mem yet
+    this->translationTable->clearBitValid(i);
+    // means that the page must be load from exec file, not from swap
+    this->translationTable->clearBitSwap(i);
+    // allows programm to read and write on this page.
+    this->translationTable->setBitReadAllowed(i);
+    this->translationTable->setBitWriteAllowed(i);
+    // this bit it set everytime a I/O is done on this page
+    // meaning we gotta wait till it's over
+    this->translationTable->clearBitIo(i);
+  }
   this->nb_mapped_files++;
   
   return this->mapped_files[this->nb_mapped_files-1].first_address;
-  #endif // ETUDIANTS_TP
+ // #endif // ETUDIANTS_TP
 
 }
 
