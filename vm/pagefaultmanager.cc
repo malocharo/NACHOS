@@ -78,11 +78,11 @@ ExceptionType PageFaultManager::PageFault(uint32_t virtualPage)
 				memset(&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]), 0, g_cfg->PageSize);
 			else{
         //loaded from the executable on disk
-				OpenFile *f = g_current_thread->GetProcessOwner()->addrspace->findMappedFile(addrDisk);
-				DEBUG('f',"*********Openfile %x at addrDisk = %d\n",f,addrDisk);
-				if(f)
+				OpenFile *mappedFile = g_current_thread->GetProcessOwner()->addrspace->findMappedFile(virtualPage*g_cfg->PageSize);
+				if(mappedFile)
 				{
-					DEBUG('f',"-------------found mapped file %s in pagedefault method\n",f->GetName());
+					DEBUG('f',"found mapped file %s in pagedefault method\n",mappedFile->GetName());
+					mappedFile->ReadAt((char *)&(g_machine->mainMemory[g_machine->mmu->translationTable->getPhysicalPage(virtualPage)*g_cfg->PageSize]), g_cfg->PageSize, addrDisk);
 				}
 				else
 				{

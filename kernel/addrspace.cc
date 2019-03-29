@@ -400,29 +400,25 @@ int AddrSpace::Mmap(OpenFile *f, int size)
   #endif
   //#ifdef ETUDIANTS_TP
   DEBUG('f',"----Mapping file %s\n",f->GetName());
-  this->mapped_files[this->nb_mapped_files].size = size;
-  this->mapped_files[this->nb_mapped_files].file = f;
-
   // nb of virtual page to be allocated
   int nbPages = divRoundUp(size,g_cfg->PageSize);
   int firstPage = this->Alloc(nbPages);
   ASSERT(firstPage != -1);
-  this->mapped_files[this->nb_mapped_files].first_address = (nbPages + firstPage) * g_cfg->PageSize;
+  this->mapped_files[this->nb_mapped_files].first_address = firstPage * g_cfg->PageSize;
+  this->mapped_files[this->nb_mapped_files].size = size;
+  this->mapped_files[this->nb_mapped_files].file = f;
+  
   for(int i = firstPage;i < firstPage + nbPages;i++) 
   {
     this->translationTable->clearBitValid(i);    
-    this->translationTable->setAddrDisk(i,this->mapped_files[this->nb_mapped_files].first_address + (g_cfg->PageSize*(i-firstPage)));
-    DEBUG('f',"---------------addrDisk %d for virtualPage %d\n",this->mapped_files[this->nb_mapped_files].first_address + (g_cfg->PageSize*(i-firstPage)),i);
-    // means that the page is not in physical mem yet
+    this->translationTable->setAddrDisk(i,this->mapped_files[this->nb_mapped_files].first_address + (g_cfg->PageSize*(i-firstPage))); 
     this->translationTable->clearBitValid(i);
-    // means that the page must be load from exec file, not from swap
     this->translationTable->clearBitSwap(i);
-    // allows programm to read and write on this page.
     this->translationTable->setBitReadAllowed(i);
     this->translationTable->setBitWriteAllowed(i);
-    // this bit it set everytime a I/O is done on this page
-    // meaning we gotta wait till it's over
     this->translationTable->clearBitIo(i);
+    this->translationTable->clearBitM(i);
+    this->translationTable->clearBitU(i);
   }
   this->nb_mapped_files++;
   
@@ -446,7 +442,7 @@ OpenFile *AddrSpace::findMappedFile(int32_t addr) {
   // for every mapped file, we look if the param's value is between their first virtual
   // addr and their last, wich is first_addr + size
   for(int i = 0; i < this->nb_mapped_files;i++)
-    if(addr >= this->mapped_files[i].first_address && addr <= this->mapped_files[i].first_address + this->mapped_files[i].size)
+    if((addr >= this->mapped_files[i].first_address) && addr < (this->mapped_files[i].first_address + this->mapped_files[i].size))
       return this->mapped_files[i].file;
   return NULL;
 
