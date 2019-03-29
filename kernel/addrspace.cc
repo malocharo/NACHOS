@@ -175,7 +175,7 @@ AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 	  else translationTable->clearBitWriteAllowed(virt_page);
 	  translationTable->clearBitIo(virt_page);
 
-    #ifndef ETUDIANTS_TP
+    #ifdef ETUDIANTS_TP
     // The SHT_NOBITS flag indicates if the section has an image
 	  // in the executable file (text or data section) or not 
 	  // (bss section)
@@ -188,7 +188,7 @@ AddrSpace::AddrSpace(OpenFile * exec_file, Process *p, int *err)
 
     
 
-    #ifdef ETUDIANTS_TP
+    #ifndef ETUDIANTS_TP
 	  // Get a page in physical memory, halt of there is not sufficient space
 	  int pp = g_physical_mem_manager->FindFreePage();
 	  if (pp == -1) { 
@@ -306,7 +306,7 @@ int AddrSpace::StackAllocate(void)
 
   for (int i = stackBasePage ; i < (stackBasePage + numPages) ; i++) {
     // set every page so that it will create page default at first call
-    #ifndef ETUDIANTS_TP
+    #ifdef ETUDIANTS_TP
 
     // not in disk yet, -1 as anonymous mapping
     translationTable->setAddrDisk(i,-1);
@@ -325,7 +325,7 @@ int AddrSpace::StackAllocate(void)
   
 
 
-    #ifdef ETUDIANTS_TP
+    #ifndef ETUDIANTS_TP
     /* Without demand paging */
 
     // Allocate a new physical page for the stack, halt if not page availabke
@@ -398,17 +398,19 @@ int AddrSpace::Mmap(OpenFile *f, int size)
   printf("**** Warning: method AddrSpace::Mmap is not implemented yet\n");
   exit(-1);
   #endif
-  
+  #ifdef ETUDIANTS_TP
   this->mapped_files[this->nb_mapped_files].size = size;
   this->mapped_files[this->nb_mapped_files].file = f;
 
   // nb of virtual page to be allocated
   int nbPages = divRoundUp(size,g_cfg->PageSize);
-  int diskAddr = this->translationTable->getAddrDisk(this->mapped_files[this->nb_mapped_files].first_address);
+  //int diskAddr = this->translationTable->getAddrDisk(this->mapped_files[this->nb_mapped_files].first_address);
   this->mapped_files[this->nb_mapped_files].first_address = this->Alloc(nbPages);
   ASSERT(this->mapped_files[this->nb_mapped_files].first_address != -1);
   this->nb_mapped_files++;
+  
   return this->mapped_files[this->nb_mapped_files-1].first_address;
+  #endif // ETUDIANTS_TP
 
 }
 
